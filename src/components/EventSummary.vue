@@ -48,7 +48,7 @@
     const formGuestStore = useFormGuestStore();
   
     const copyLink = () => {
-        navigator.clipboard.writeText(`${window.location.origin}/event/${event.value.id}/invite`).then(() => {
+        navigator.clipboard.writeText(`${window.location.origin}/events/${event.value.id}/invite`).then(() => {
             alert('Lien copié !');
         });
     };
