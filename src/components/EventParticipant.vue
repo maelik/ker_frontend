@@ -51,7 +51,7 @@
 
     const fetchListParticipants = async () => {
     try {
-      let apiUrl = `http://localhost:3000/api/events/${route.params.id}/responsesParticipant`;
+      let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/responsesParticipant`;
       
       const response = await fetch(apiUrl);
       if (!response.ok) {

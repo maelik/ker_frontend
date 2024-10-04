@@ -44,10 +44,8 @@
 
   const fetchEvents = async () => {
     try {
-      const apiUrl = import.meta.env.VITE_API_URL;
-      console.log(`${apiUrl}/api/events/listEvents/${userStore.email}`);
       
-      const response = await fetch(`${apiUrl}/api/events/listEvents/${userStore.email}`);
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/listEvents/${userStore.email}`);
       
       if (!response.ok) {
         throw new Error('Erreur HTTP');

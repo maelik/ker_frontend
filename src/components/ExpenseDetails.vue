@@ -28,7 +28,7 @@
 
     const fetchInfoExpense = async () => {
         try {
-            let apiUrl = `http://localhost:3000/api/events/${id}/tricount/${expenseId}/infoExpense`;
+            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${id}/tricount/${expenseId}/infoExpense`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {

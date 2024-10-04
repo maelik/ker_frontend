@@ -42,7 +42,7 @@
     //fonction qui créer le guest
     const fetchGuestInvitation = async () => {
       try {
-        let apiUrl = `http://localhost:3000/api/events/${route.params.id}/invite`;
+        let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/invite`;
         let response = null;
         
         if(userStore.email) {
@@ -86,7 +86,7 @@
     //fonction pour récupérer les réponses du guest
     const fetchGuestResponses = async () => {
       try {
-        let apiUrl = `http://localhost:3000/api/guests/${userStore.token}/event/${route.params.id}/response`;
+        let apiUrl = `${import.meta.env.VITE_API_URL}/api/guests/${userStore.token}/event/${route.params.id}/response`;
         
         const response = await fetch(apiUrl);
            
@@ -132,7 +132,7 @@
     // fonction pour modifier les réponses
     const saveGuestResponses = async () => {
       try {
-        const guestResponse = await fetch(`http://localhost:3000/api/guests/${userStore.token}/event/${route.params.id}/response`, {
+        const guestResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/guests/${userStore.token}/event/${route.params.id}/response`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

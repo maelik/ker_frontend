@@ -53,7 +53,7 @@
 
     const createMessage = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/events/${route.params.id}/messaging/${userStore.token}/post/${route.params.postId}/createDiscussion`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/messaging/${userStore.token}/post/${route.params.postId}/createDiscussion`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -82,7 +82,7 @@
 
     const fetchListDiscussion = async () => {
           try {
-              let apiUrl = `http://localhost:3000/api/events/${route.params.id}/messaging/post/${route.params.postId}/listDiscussion`;
+              let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/messaging/post/${route.params.postId}/listDiscussion`;
               
               const response = await fetch(apiUrl);
               if (!response.ok) {

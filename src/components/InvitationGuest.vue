@@ -29,7 +29,7 @@
 
     const fetchEventDetails = async () => {        
       try {
-        let apiUrl = `http://localhost:3000/api/events/${route.params.id}/infoEvent`;
+        let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/infoEvent`;
         
         const response = await fetch(apiUrl);
         if (!response.ok) {

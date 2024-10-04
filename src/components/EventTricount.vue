@@ -56,7 +56,7 @@
 
     const fetchListExpenses = async () => {
         try {
-            let apiUrl = `http://localhost:3000/api/events/${route.params.id}/tricount/listExpenses`;
+            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/tricount/listExpenses`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {
@@ -75,7 +75,7 @@
 
     const fetchTabPayParticipant = async () => {
         try {
-            let apiUrl = `http://localhost:3000/api/events/${route.params.id}/tricount/payParticipant`;
+            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/tricount/payParticipant`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {
@@ -91,7 +91,7 @@
 
     const fetchBalancing = async () => {
         try {
-            let apiUrl = `http://localhost:3000/api/events/${route.params.id}/tricount/balancing`;
+            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/tricount/balancing`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {

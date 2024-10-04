@@ -56,7 +56,7 @@
           }))
         };
 
-        const response = await fetch(`http://localhost:3000/api/events/${event.value.id}/user/${userStore.token}/updateEvent`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${event.value.id}/user/${userStore.token}/updateEvent`, {
           method: 'PUT', // Utilisation de PUT pour mettre à jour
           headers: {
             'Content-Type': 'application/json',

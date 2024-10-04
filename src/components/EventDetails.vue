@@ -35,7 +35,7 @@
     const fetchEventDetails = async () => {
         
       try {
-        let apiUrl = `http://localhost:3000/api/events/${route.params.id}/infoEvent`;
+        let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/infoEvent`;
 
         // Vérifiez si l'utilisateur a créé cet événement
         const isEventCreatedByUser = userStore.eventsCreated.some(event => String(event.id) === String(route.params.id));
@@ -62,7 +62,7 @@
 
     const fetchDateFavorite = async () => {
       try {
-        let apiUrl = `http://localhost:3000/api/events/${route.params.id}/favoriteDate`;
+        let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/favoriteDate`;
         
         const response = await fetch(apiUrl);
         if (!response.ok) {

@@ -50,7 +50,7 @@
 
     const fetchListParticipant = async () => {
         try {
-            let apiUrl = `http://localhost:3000/api/events/${route.params.id}/listParticipants`;
+            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/listParticipants`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {
@@ -75,7 +75,7 @@
             const listParticipantsSelected = listParticipants.value.filter(p => p.selected);
             console.log(date.value);
             
-            const response = await fetch(`http://localhost:3000/api/events/${route.params.id}/tricount/${userStore.token}/createExpense`, {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/tricount/${userStore.token}/createExpense`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
