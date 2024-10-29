@@ -41,11 +41,14 @@
   const loading = ref(true);
   const error = ref(null);
   const userStore = useUserStore();
+  const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
 
   const fetchEvents = async () => {
     try {
       
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/listEvents/${userStore.email}`);
+      const response = await fetch(`${API_URL}/api/events/listEvents/${userStore.email}`);
       
       if (!response.ok) {
         throw new Error('Erreur HTTP');

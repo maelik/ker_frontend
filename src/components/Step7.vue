@@ -18,11 +18,14 @@
   
   // Déclare eventLink comme une référence réactive
   const eventLink = ref('');
+  const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
 
   async function createUserAndEvent() {
     try {
       // Première requête POST pour créer l'utilisateur
-      const userResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/users/createUser`, {
+      const userResponse = await fetch(`${API_URL}/api/users/createUser`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +47,7 @@
       console.log(userStore.userId); // Assure que le userId est bien récupéré
 
       // Deuxième requête POST pour créer l'événement, après avoir reçu le userId
-      const eventResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/events/createEvent`, {
+      const eventResponse = await fetch(`${API_URL}/api/events/createEvent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -37,6 +37,9 @@
     });
     const { event } = toRefs(props);
     const userStore = useUserStore();
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
 
     const addDate = () => {
         event.value.EventDates.push({ proposed_date: '', isNew: true });
@@ -56,7 +59,7 @@
           }))
         };
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${event.value.id}/user/${userStore.token}/updateEvent`, {
+        const response = await fetch(`${API_URL}/api/events/${event.value.id}/user/${userStore.token}/updateEvent`, {
           method: 'PUT', // Utilisation de PUT pour mettre à jour
           headers: {
             'Content-Type': 'application/json',

@@ -48,10 +48,13 @@
     const error = ref(null);
     const canCome = ref({});
     const cannotCome = ref({});
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
 
     const fetchListParticipants = async () => {
     try {
-      let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/responsesParticipant`;
+      let apiUrl = `${API_URL}/api/events/${route.params.id}/responsesParticipant`;
       
       const response = await fetch(apiUrl);
       if (!response.ok) {

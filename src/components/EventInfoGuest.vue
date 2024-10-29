@@ -37,12 +37,15 @@
     const { event } = toRefs(props);
     const formGuestStore = useFormGuestStore();
     const userStore = useUserStore();
-    const error = ref(null);    
+    const error = ref(null);   
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL; 
     
     //fonction qui créer le guest
     const fetchGuestInvitation = async () => {
       try {
-        let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/invite`;
+        let apiUrl = `${API_URL}/api/events/${route.params.id}/invite`;
         let response = null;
         
         if(userStore.email) {
@@ -86,7 +89,7 @@
     //fonction pour récupérer les réponses du guest
     const fetchGuestResponses = async () => {
       try {
-        let apiUrl = `${import.meta.env.VITE_API_URL}/api/guests/${userStore.token}/event/${route.params.id}/response`;
+        let apiUrl = `${API_URL}/api/guests/${userStore.token}/event/${route.params.id}/response`;
         
         const response = await fetch(apiUrl);
            
@@ -132,7 +135,7 @@
     // fonction pour modifier les réponses
     const saveGuestResponses = async () => {
       try {
-        const guestResponse = await fetch(`${import.meta.env.VITE_API_URL}/api/guests/${userStore.token}/event/${route.params.id}/response`, {
+        const guestResponse = await fetch(`${API_URL}/api/guests/${userStore.token}/event/${route.params.id}/response`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

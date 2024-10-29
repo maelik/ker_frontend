@@ -39,6 +39,9 @@
     const loading = ref(true);
     const error = ref(null);
     const userStore = useUserStore();
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
 
     const formatDate = (dateString) => {
       return new Date(dateString).toLocaleString('fr-FR', {
@@ -53,7 +56,7 @@
 
     const createMessage = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/messaging/${userStore.token}/post/${route.params.postId}/createDiscussion`, {
+        const response = await fetch(`${API_URL}/api/events/${route.params.id}/messaging/${userStore.token}/post/${route.params.postId}/createDiscussion`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -82,7 +85,7 @@
 
     const fetchListDiscussion = async () => {
           try {
-              let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/messaging/post/${route.params.postId}/listDiscussion`;
+              let apiUrl = `${API_URL}/api/events/${route.params.id}/messaging/post/${route.params.postId}/listDiscussion`;
               
               const response = await fetch(apiUrl);
               if (!response.ok) {

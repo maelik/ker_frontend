@@ -29,13 +29,16 @@
     const loadingFavoriteDate = ref(true);
     const error = ref(null);
     const favoriteDate = ref({});
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
     
           
   
     const fetchEventDetails = async () => {
         
       try {
-        let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/infoEvent`;
+        let apiUrl = `${API_URL}/api/events/${route.params.id}/infoEvent`;
 
         // Vérifiez si l'utilisateur a créé cet événement
         const isEventCreatedByUser = userStore.eventsCreated.some(event => String(event.id) === String(route.params.id));
@@ -62,7 +65,7 @@
 
     const fetchDateFavorite = async () => {
       try {
-        let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/favoriteDate`;
+        let apiUrl = `${API_URL}/api/events/${route.params.id}/favoriteDate`;
         
         const response = await fetch(apiUrl);
         if (!response.ok) {

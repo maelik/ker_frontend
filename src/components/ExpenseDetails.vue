@@ -24,11 +24,14 @@
     const id = route.params.id;
     const expenseId = route.params.expenseId;
     const expenseInfo = ref([]);
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
     
 
     const fetchInfoExpense = async () => {
         try {
-            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${id}/tricount/${expenseId}/infoExpense`;
+            let apiUrl = `${API_URL}/api/events/${id}/tricount/${expenseId}/infoExpense`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {

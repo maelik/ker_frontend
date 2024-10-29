@@ -41,6 +41,9 @@
     const listPost = ref({});
     const userStore = useUserStore();
     const topic = ref('');
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
 
 
     const findDiscussion = (eventId, postId) => {
@@ -61,7 +64,7 @@
     const createPost = async () => {
       try {        
 
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/messaging/${userStore.token}/createPost`, {
+        const response = await fetch(`${API_URL}/api/events/${route.params.id}/messaging/${userStore.token}/createPost`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -86,7 +89,7 @@
 
     const fetchListPosts = async () => {
         try {
-            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/messaging/listPost`;
+            let apiUrl = `${API_URL}/api/events/${route.params.id}/messaging/listPost`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {

@@ -24,12 +24,14 @@
     const formGuestStore = useFormGuestStore();
     const loadingEvent = ref(true);
     const error = ref(null);
-    const email = ref(null);
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
     
 
     const fetchEventDetails = async () => {        
       try {
-        let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/infoEvent`;
+        let apiUrl = `${API_URL}/api/events/${route.params.id}/infoEvent`;
         
         const response = await fetch(apiUrl);
         if (!response.ok) {

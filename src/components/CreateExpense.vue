@@ -43,6 +43,9 @@
     const amount = ref('');
     const description = ref('');
     const date = ref('');
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
 
     const goBack = () => {
       router.push({name:'EventTricount'}); // Retour à la liste des discussions
@@ -50,7 +53,7 @@
 
     const fetchListParticipant = async () => {
         try {
-            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/listParticipants`;
+            let apiUrl = `${API_URL}/api/events/${route.params.id}/listParticipants`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {
@@ -75,7 +78,7 @@
             const listParticipantsSelected = listParticipants.value.filter(p => p.selected);
             console.log(date.value);
             
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/tricount/${userStore.token}/createExpense`, {
+            const response = await fetch(`${API_URL}/api/events/${route.params.id}/tricount/${userStore.token}/createExpense`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

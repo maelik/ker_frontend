@@ -49,6 +49,9 @@
     const tabPayParticipant = ref([]);
     const tabBalancing = ref([]);
     const id = route.params.id;
+    const API_URL = import.meta.env.DEV  
+    ? 'http://localhost:3000'
+    : import.meta.env.VITE_API_URL;
 
     const findListExpenses = () => {
       router.push({ name: 'ListExpenses', params: { id: route.params.id } });
@@ -56,7 +59,7 @@
 
     const fetchListExpenses = async () => {
         try {
-            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/tricount/listExpenses`;
+            let apiUrl = `${API_URL}/api/events/${route.params.id}/tricount/listExpenses`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {
@@ -75,7 +78,7 @@
 
     const fetchTabPayParticipant = async () => {
         try {
-            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/tricount/payParticipant`;
+            let apiUrl = `${API_URL}/api/events/${route.params.id}/tricount/payParticipant`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {
@@ -91,7 +94,7 @@
 
     const fetchBalancing = async () => {
         try {
-            let apiUrl = `${import.meta.env.VITE_API_URL}/api/events/${route.params.id}/tricount/balancing`;
+            let apiUrl = `${API_URL}/api/events/${route.params.id}/tricount/balancing`;
             
             const response = await fetch(apiUrl);
             if (!response.ok) {
