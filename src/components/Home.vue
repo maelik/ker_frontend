@@ -1,6 +1,7 @@
 <template>
     <div class="home-container">
       <div ref="gradient" class="gradient"></div>
+      <img alt="logo ker" src="../assets/logo.png" class="logo"/>
       <div class="container-title">
         <h1>Gère tes invitations</h1>
         <div class="line-carousel">
@@ -230,6 +231,11 @@
     overflow: hidden;
     height: 100%;
     width: 100%;
+  }
+
+  .logo {
+    position: fixed;
+    top: 16px;
   }
 
   .gradient {
