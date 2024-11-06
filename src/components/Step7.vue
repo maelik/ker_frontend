@@ -16,6 +16,7 @@
   const formStore = useFormStore();
   const userStore = useUserStore();
   
+  
   // Déclare eventLink comme une référence réactive
   const eventLink = ref('');
   const API_URL = import.meta.env.DEV  

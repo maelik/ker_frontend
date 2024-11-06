@@ -36,7 +36,7 @@
   </template>
   
   <script setup >
-    import { ref, onMounted, onUnmounted } from 'vue';
+    import { ref, onMounted, onBeforeUnmount } from 'vue';
     import { useUserStore } from '../stores/userStore';
     import { useRouter } from 'vue-router';
     import { gsap} from 'gsap';
@@ -84,39 +84,40 @@
         })
     }
 
+    const timelineSlider = gsap.timeline({ repeat: -1 }); 
+    const timelineGradient = gsap.timeline({ repeat: -1 }); 
+    const timelineShadow = gsap.timeline({ repeat: -1 }); 
 
     onMounted(() => {
-      document.body.style.overflow = 'hidden';
-      
-      const timelineSlider = gsap.timeline({ repeat: -1 });     
+      document.body.style.overflow = 'hidden';    
   
       timelineSlider
         .to(slider.value, { 
-          y: () => -slider.value.offsetHeight + 74 + 53 , 
+          y: () => -slider.value.offsetHeight + 66 + (slider.value.offsetHeight/6) * 1, 
+          duration: 1,
+          ease: 'bounce.out',
+          delay: 1,
+        })
+       .to(slider.value, { 
+          y: () => -slider.value.offsetHeight + 66 + (slider.value.offsetHeight/6) * 2, 
           duration: 1,
           ease: 'bounce.out',
           delay: 1,
         })
         .to(slider.value, { 
-          y: () => -slider.value.offsetHeight + 148 + 53 , 
+          y: () => -slider.value.offsetHeight + 66 + (slider.value.offsetHeight/6) * 3, 
           duration: 1,
           ease: 'bounce.out',
           delay: 1,
         })
         .to(slider.value, { 
-          y: () => -slider.value.offsetHeight + 222 + 53 , 
+          y: () => -slider.value.offsetHeight + 66 + (slider.value.offsetHeight/6) * 4, 
           duration: 1,
           ease: 'bounce.out',
           delay: 1,
         })
         .to(slider.value, { 
-          y: () => -slider.value.offsetHeight + 296 + 53 , 
-          duration: 1,
-          ease: 'bounce.out',
-          delay: 1,
-        })
-        .to(slider.value, { 
-          y: () => -slider.value.offsetHeight + 370 + 53 , 
+          y: () => -slider.value.offsetHeight + 66 + (slider.value.offsetHeight/6) * 5, 
           duration: 1,
           ease: 'bounce.out',
           delay: 1,
@@ -125,9 +126,7 @@
       gsap.set(gradient.value, {
         background: 'radial-gradient(ellipse 200% 120% at top center, #E8F599 30%, #fff 50%)',
         opacity: 0.7,  // Valeur d'opacité initiale
-      });
-
-      const timelineGradient = gsap.timeline({ repeat: -1 });     
+      });    
   
       timelineGradient
         .to(gradient.value, { 
@@ -168,9 +167,7 @@
 
       gsap.set(containerEmail.value, {
         boxShadow: '0px 2px 35px 25px rgba(232, 245, 153, 0.7)',
-      });
-
-      const timelineShadow = gsap.timeline({ repeat: -1 });     
+      });    
   
       timelineShadow
         .to(containerEmail.value, {
@@ -205,23 +202,23 @@
         })
     });
 
-    onUnmounted(() => {
+    onBeforeUnmount(() => {
       document.body.style.overflow = '';
-      if (timelineSlider) {
-        timelineSlider.kill();
-      }
-      if (timelineGradient) {
-        timelineGradient.kill();
-      }
-      if (timelineShadow) {
-        timelineShadow.kill();
-      }
+      timelineSlider.kill();
+      timelineGradient.kill();
+      timelineShadow.kill();
     });
     
 </script> 
   
 <style scoped>
   /* Styles mobile-first */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   .home-container {
     display: flex;
     flex-direction: column;
@@ -279,16 +276,17 @@
   .line-carousel .pastille-container {
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    /* gap: 30px; */
     align-items: flex-start;
     justify-content: flex-end;
     position: absolute;
-    transform: translateY(calc(-100% + 53px));
+    transform: translateY(calc(-100% + 66px)); /*74 taille pastille - 8 pour centrer */
     will-change: transform;
   }
 
   .line-carousel .pastille {
     border-radius: 50px;
+    margin: 15px 0;
     padding: 5px 15px;
     text-align: center;
     font-size: 24px;
@@ -335,6 +333,7 @@
     font-weight: 400;
     font-size: 14px;
     transform: translateY(-20vw);
+    margin: 14px;
   }
   
   .btn-create-event {
@@ -368,6 +367,7 @@
     font-weight: 500;
     line-height: 26px;
     font-family: 'General sans';
+    margin: 14px;
   }
   
   .email-retrieve-container {
@@ -386,13 +386,14 @@
 
   .email-retrieve-container .exit{
     background-color: transparent;
-    display: inline-block;
     width: 15px;
     height: 15px;
-    border: none;
     border-right: 2px solid rgba(0,0,0,0.3);
     border-top: 2px solid rgba(0,0,0,0.3);
+    border-bottom: 0;
+    border-left: 0;
     transform: rotate(135deg);
+    cursor: pointer; 
   }
 
   .email-retrieve-container p {

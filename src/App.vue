@@ -14,9 +14,10 @@
 </template>
 
 <style>
-html,body {
+html, body{
   padding: 0px;
   margin: 0px;
+  box-sizing: border-box;
 }
 /* Mobile first */
 
