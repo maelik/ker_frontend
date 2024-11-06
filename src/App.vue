@@ -13,12 +13,16 @@
   </main>
 </template>
 
-<style scoped>
+<style>
+html,body {
+  padding: 0px;
+  margin: 0px;
+}
 /* Mobile first */
+
 .container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
 }
 
 /* Tablette et plus */
