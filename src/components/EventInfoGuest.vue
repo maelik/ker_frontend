@@ -1,22 +1,39 @@
 <template>
-    <div class="event-details-container">    
+    <div class="event-info-guest-container"> 
+      <div class="info-container">
+        <div class="line"></div>
+        <span class="info-text">Informations</span>
+        <div class="line"></div>
+      </div>   
       <form @submit="saveGuestResponses">
-        <label for="user-name">Quel est ton nom ?</label>
-        <input v-model="formGuestStore.guestName" id="user-name" type="text" placeholder="Ton nom" />
+        <label class="label" for="user-name">Quel est ton nom ?</label>
+        <input class="input-form" v-model="formGuestStore.guestName" id="user-name" type="text" placeholder="Ton nom" />
   
-        <label>Voter pour une date</label>
-        <div v-for="(date, index) in event.EventDates" :key="index" class="date-selector">
-          <input 
-            type="checkbox" 
-            :id="'date-' + index" 
-            :name="'eventDate-' + index" 
-            v-model="date.selected" 
-            @change="updateResponse(date.id, date.selected)"/>
-          <label :for="'date-' + index">{{ date.proposed_date }}</label>
-        </div>
-        <p>{{ event.location }}</p>
+        <label class="label">Voter pour une date</label>
 
-        <button type="submit">✔ Valider les changements</button>
+        <Draggable v-model="event.EventDates" item-key="id" class="draggable">
+          <template #item="{ element }">
+            <div class="date-selector">
+              <label class="label checkbox-svg" :for="'date-' + element.id">
+              <input 
+                type="checkbox"
+                :name="'date-' + element.id" 
+                v-model="element.selected" 
+                @change="updateResponse(date.id, date.selected)"/>
+  
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="checkbox-icon">
+                  <rect x="3.75" y="3.75" width="16.5" height="16.5" rx="2.25" :stroke="element.selected ? '#131313' : '#a8acb7'" stroke-width="1.5"/>
+                  <path  v-if="element.selected" d="M10.2951 17C10.055 17 9.82691 16.8995 9.65883 16.7238L6.26113 13.1702C5.91296 12.8061 5.91296 12.2033 6.26113 11.8392C6.6093 11.4751 7.18559 11.4751 7.53377 11.8392L10.2951 14.7272L16.4662 8.27311C16.8144 7.90896 17.3907 7.90896 17.7389 8.27311C18.087 8.63725 18.087 9.23997 17.7389 9.60412L10.9315 16.7238C10.7634 16.8995 10.5353 17 10.2951 17Z" fill="#131313"/>
+                </svg>
+  
+                {{ element.proposed_date }}
+              </label>
+            </div>
+          </template>
+        </Draggable>
+        
+        <button type="submit">Valider les changements</button>
+        <div class="padding-bottom"></div>
       </form>
     </div>
   </template>
@@ -26,6 +43,7 @@
     import { useRoute } from 'vue-router';
     import { useFormGuestStore } from '../stores/formGuestStore';
     import { useUserStore } from '../stores/userStore';
+    import Draggable from 'vuedraggable';
     
     const props = defineProps({
       event: {
@@ -39,32 +57,31 @@
     const userStore = useUserStore();
     const error = ref(null);   
     const API_URL = import.meta.env.DEV  
-    ? 'http://localhost:3000'
+    ? `${window.location.protocol}//${window.location.hostname}:3000`
     : import.meta.env.VITE_API_URL; 
     
     //fonction qui créer le guest
     const fetchGuestInvitation = async () => {
       try {
         let apiUrl = `${API_URL}/api/events/${route.params.id}/invite`;
-        let response = null;
         
-        if(userStore.email) {
+        let response = null;
+        if(formGuestStore.email) {
           response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              email: userStore.email,
+              email: formGuestStore.email,
             }),
           });
         }
         
-
         if (!response.ok) {
           throw new Error('Erreur HTTP');
         }
-        const guestInvitation = await response.json();        
+        const guestInvitation = await response.json();
         
         userStore.updateEmail(guestInvitation.guest.email);
         userStore.updateToken(guestInvitation.guest.token);
@@ -97,9 +114,10 @@
         if (!response.ok) {
           throw new Error('Erreur HTTP');
         }
-        const guestResponses = await response.json();
-
+        const guestResponses = await response.json();        
+        
         let responseDate = [];
+        
         
         event.value.EventDates.forEach(date => {
           const responseGuest = guestResponses.GuestResponses.find(res => res.EventDate.proposed_date === date.proposed_date);          
@@ -167,9 +185,128 @@
   </script>
   
   <style scoped>
+
+    .event-info-guest-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .line {
+      flex: 1;
+      height: 1px;
+      background-color: #ebedf2;
+    }
+
+    .info-text {
+      font-family: 'General sans';
+      font-size: 14px;
+      color: #a8acb7; 
+    }
     form {
       display: flex;
       flex-direction: column;
+      width: 75dvw;
+      margin: 0 auto;
+      padding-top: 20px;
+    }
+
+    .label {
+      font-family: 'General sans';
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 10px;
+      width: 70dvw;
+    }
+
+    .input-form {
+      width: calc(75dvw - 30px);
+      height: 8dvh;
+      flex: 0 0 auto;
+      border-radius: 4px;
+      background-color: rgba(0, 0, 0, 0.05);
+      color: #000000;
+      margin: 10px 0;
+      padding: 0px 15px;
+      border: none;
+      font-size: 14px;
+      font-family: 'Switzer';
+      font-weight: 400;
+    }
+
+    .input-form:focus-visible {
+        outline: 1px solid #A8ACB7;
+    }
+
+    .padding-bottom {
+      min-height: 200px;
+      width: 100%;
+      background-color: transparent;
+    }
+
+    form > button {
+      background-color: #000000;
+      width: 75dvw;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: 'General sans';
+      font-weight: 500;
+      margin-top: 10px;
+      height: 42px;
+    }
+
+    .date-selector {
+      width: calc(75dvw - 30px);
+      border: 1px solid #ebedf2;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      padding: 15px;
+    }
+
+    .date-selector > label {
+      margin: 0px;
+      font-size: 14px;
+    }
+
+    .checkbox-svg > input {
+      display: none;
+    }
+
+    .checkbox-svg {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-svg .checkbox-icon {
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    /* Animation au clic */
+    .checkbox-svg .checkbox-icon:active {
+      transform: scale(0.9);
+    }
+
+    .first {
+      margin-top: 10px;
+    }
+
+    .draggable {
+      margin-top: 10px;
     }
   </style>
   

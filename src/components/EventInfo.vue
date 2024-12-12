@@ -1,6 +1,6 @@
 
 <template>
-    <div class="event-details-container">
+    <div class="event-view-container">
         <div v-if="event.view == 'user'">
             <EventInfoUser :event="event.event"/>
         </div>

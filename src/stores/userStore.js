@@ -33,6 +33,9 @@ export const useUserStore = defineStore('user', {
       this.eventsCreated = [];
       this.eventsInvited = [];
     },
+    resetStore() {
+      this.$reset();
+    },
   },
   persist: {
     enabled: true,

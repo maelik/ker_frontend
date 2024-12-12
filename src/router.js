@@ -13,7 +13,7 @@ import Step7 from './components/Step7.vue';
 import EventInfo from './components/EventInfo.vue';
 import EventParticipants from './components/EventParticipant.vue';
 import EventListPost from './components/EventListPost.vue';
-import EventTricount from './components/EventTricount.vue';
+import EventKercount from './components/EventKercount.vue';
 import DiscussionDetails from './components/DiscussionDetails.vue';
 import ListExpenses from './components/ListExpenses.vue';
 import ExpenseDetails from './components/ExpenseDetails.vue';
@@ -40,15 +40,15 @@ const routes = [
       { path: 'info', name: 'EventInfo', component: EventInfo },
       { path: 'participants', name: 'EventParticipants', component: EventParticipants },
       { path: 'discussions', name: 'EventListPost', component: EventListPost },
-      { path: 'tricount', name: 'EventTricount', component: EventTricount },
+      { path: 'kercount', name: 'EventKercount', component: EventKercount },
       // Rediriger vers 'info' par défaut
-      { path: '', redirect: 'info' },
+      { path: '',name: 'redirect', redirect: 'info' },
     ],
   },
   { path: '/events/:id/discussions/:postId', name: 'DiscussionDetails', component: DiscussionDetails, props: true },
-  { path: '/events/:id/tricount/listExpenses', name: 'ListExpenses', component: ListExpenses, props: true },
-  { path: '/events/:id/tricount/expenseDetails/:expenseId', name: 'ExpenseDetails', component: ExpenseDetails, props: true },
-  { path: '/events/:id/tricount/createExpense', name: 'createExpense', component: CreateExpense, props: true },
+  { path: '/events/:id/tricount/listExpenses', name: 'ListExpenses', component: ListExpenses },
+  { path: '/events/:id/tricount/expenseDetails/:expenseId', name: 'ExpenseDetails', component: ExpenseDetails },
+  { path: '/events/:id/tricount/createExpense', name: 'createExpense', component: CreateExpense },
   { 
     path: '/createEvent', 
     name: 'CreateEvent', 
