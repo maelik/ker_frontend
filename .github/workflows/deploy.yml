@@ -3,7 +3,7 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - master
+      - master  # Déclenchement lorsque vous poussez sur la branche master
 
 jobs:
   deploy:
@@ -19,7 +19,7 @@ jobs:
       if: ${{ contains(github.repository, 'ker_frontend') }}
       uses: actions/setup-node@v3
       with:
-        node-version: '16'
+        node-version: '16' # Version de Node.js requise pour votre projet
 
     # Étape 3 : Installer les dépendances et construire le front-end
     - name: Install dependencies and build
@@ -42,10 +42,10 @@ jobs:
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem  # Assurez-vous que la clé privée est protégée
-        rsync -avz -e "ssh -i private_key.pem -p 65002" dist/ u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/public_html/
-        rm private_key.pem
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  # Assurez-vous que la clé est correctement injectée
+        chmod 600 ~/.ssh/id_rsa  # Assurez-vous que la clé privée est protégée
+        rsync -avz -e "ssh -i ~/.ssh/id_rsa -p 65002" dist/ u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/public_html/
+        rm ~/.ssh/id_rsa  # Supprime la clé privée après le déploiement
 
     # Étape 6 : Déployer le back-end
     - name: Deploy back-end
@@ -53,8 +53,8 @@ jobs:
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem  # Assurez-vous que la clé privée est protégée
-        rsync -avz -e "ssh -i private_key.pem -p 65002" . u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/backend/
-        ssh -i private_key.pem -p 65002 u931933414@145.223.35.146 "cd /home/u931933414/backend && npm install && pm2 restart all"
-        rm private_key.pem
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  # Assurez-vous que la clé est correctement injectée
+        chmod 600 ~/.ssh/id_rsa  # Assurez-vous que la clé privée est protégée
+        rsync -avz -e "ssh -i ~/.ssh/id_rsa -p 65002" . u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/backend/
+        ssh -i ~/.ssh/id_rsa -p 65002 u931933414@145.223.35.146 "cd /home/u931933414/backend && npm install && pm2 restart all"
+        rm ~/.ssh/id_rsa  # Supprime la clé privée après le déploiement
