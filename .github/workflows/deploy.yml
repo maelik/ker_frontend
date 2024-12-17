@@ -3,7 +3,7 @@ name: Deploy to Hostinger
 on:
   push:
     branches:
-      - master  # Déclenchement lorsque vous poussez sur la branche master
+      - master
 
 jobs:
   deploy:
@@ -19,7 +19,7 @@ jobs:
       if: ${{ contains(github.repository, 'ker_frontend') }}
       uses: actions/setup-node@v3
       with:
-        node-version: '16' # Version de Node.js requise pour votre projet
+        node-version: '16'
 
     # Étape 3 : Installer les dépendances et construire le front-end
     - name: Install dependencies and build
@@ -43,7 +43,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem
+        chmod 600 private_key.pem  # Assurez-vous que la clé privée est protégée
         rsync -avz -e "ssh -i private_key.pem -p 65002" dist/ u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/public_html/
         rm private_key.pem
 
@@ -54,7 +54,7 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem
+        chmod 600 private_key.pem  # Assurez-vous que la clé privée est protégée
         rsync -avz -e "ssh -i private_key.pem -p 65002" . u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/backend/
         ssh -i private_key.pem -p 65002 u931933414@145.223.35.146 "cd /home/u931933414/backend && npm install && pm2 restart all"
         rm private_key.pem
