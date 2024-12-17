@@ -28,33 +28,23 @@ jobs:
         npm install
         npm run build
 
-    # Étape 4 : Ajouter la clé de l'hôte à known_hosts pour éviter l'erreur de vérification de l'hôte
-    - name: Add Host Key to known_hosts
+    # Étape 4 : Configurer la clé SSH et la connexion
+    - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-        ssh-keyscan -p 65002 145.223.35.146 >> ~/.ssh/known_hosts
-        chmod 700 ~/.ssh
-        chmod 644 ~/.ssh/known_hosts
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 145.223.35.146 >> ~/.ssh/known_hosts  # Ajoute l'hôte SSH à la liste des hôtes connus
 
     # Étape 5 : Déployer les fichiers du front-end sur le serveur Hostinger
     - name: Deploy front-end
       if: ${{ contains(github.repository, 'ker_frontend') }}
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  # Assurez-vous que la clé est correctement injectée
-        chmod 600 ~/.ssh/id_rsa  # Assurez-vous que la clé privée est protégée
-        rsync -avz -e "ssh -i ~/.ssh/id_rsa -p 65002" dist/ u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/public_html/
-        rm ~/.ssh/id_rsa  # Supprime la clé privée après le déploiement
+        rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" dist/ u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/public_html/
 
     # Étape 6 : Déployer le back-end
     - name: Deploy back-end
       if: ${{ contains(github.repository, 'ker_backend') }}
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa  # Assurez-vous que la clé est correctement injectée
-        chmod 600 ~/.ssh/id_rsa  # Assurez-vous que la clé privée est protégée
-        rsync -avz -e "ssh -i ~/.ssh/id_rsa -p 65002" . u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/backend/
-        ssh -i ~/.ssh/id_rsa -p 65002 u931933414@145.223.35.146 "cd /home/u931933414/backend && npm install && pm2 restart all"
-        rm ~/.ssh/id_rsa  # Supprime la clé privée après le déploiement
+        rsync -avz -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" . u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/backend/
+        ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no u931933414@145.223.35.146 "cd /home/u931933414/backend && npm install && pm2 restart all"
