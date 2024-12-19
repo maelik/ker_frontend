@@ -27,26 +27,3 @@ jobs:
       run: |
         npm install
         npm run build
-
-    # Étape 4 : Déployer les fichiers du front-end sur le serveur Hostinger
-    - name: Deploy front-end
-      if: ${{ contains(github.repository, 'ker_frontend') }}
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem
-        rsync -avz -e "ssh -i private_key.pem -p 65002" dist/ u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/public_html/
-        rm private_key.pem
-
-    # Étape 5 : Déployer le back-end
-    - name: Deploy back-end
-      if: ${{ contains(github.repository, 'ker_backend') }}
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem
-        rsync -avz -e "ssh -i private_key.pem -p 65002" . u931933414@145.223.35.146:/home/u931933414/domains/kerapp.fr/backend/
-        ssh -i private_key.pem u931933414@145.223.35.146 "cd /home/u931933414/backend && npm install && pm2 restart all"
-        rm private_key.pem
