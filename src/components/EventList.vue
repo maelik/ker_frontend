@@ -22,7 +22,7 @@
             <RouterLink :to="{ name: 'EventDetails', params: { id: event.id } }">
               <div class="event-item">
                 <span class="event-name">{{ event.title }}</span>
-                <img alt="gradient event" :src="`/src/assets/${event['image-gradient']}`" class="gradient-event"/>
+                <img alt="gradient event" :src="`/assets/${event['image-gradient']}`" class="gradient-event"/>
               </div>
             </RouterLink>
           </div>
@@ -35,7 +35,7 @@
             <RouterLink :to="{ name: 'EventDetails', params: { id: event.id } }">
               <div class="event-item">
                 <span class="event-name">{{ event.title }}</span>
-                <img alt="gradient event" :src="`/src/assets/${event['image-gradient']}`" class="gradient-event"/>
+                <img alt="gradient event" :src="`/assets/${event['image-gradient']}`" class="gradient-event"/>
               </div>
             </RouterLink>
           </div>

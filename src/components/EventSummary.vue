@@ -19,7 +19,7 @@
 
       <div class="event-item">
         <span class="event-name">{{ event.title }}</span>
-        <img alt="gradient event" :src="`/src/assets/${event['image-gradient']}`" class="gradient-event"/>
+        <img alt="gradient event" :src="`/assets/${event['image-gradient']}`" class="gradient-event"/>
         <div class="info-creator" v-if="view == 'guest'">
           <p>Organisé par {{ event.userName }}</p>
           <p>{{ event.location }}</p>

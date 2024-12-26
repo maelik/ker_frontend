@@ -159,7 +159,7 @@
   left: 0;
   width: 100dvw;
   height: 100dvh;
-  background-image: url('../assets/Gradient bg.png');
+  background-image: url('/assets/Gradient bg.png');
   opacity: 0.5;
   z-index: -1;
 }
