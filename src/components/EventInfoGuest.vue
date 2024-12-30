@@ -11,12 +11,13 @@
   
         <label class="label">Voter pour une date</label>
 
-        <Draggable v-model="event.EventDates" item-key="id" class="draggable">
+        <Draggable v-model="event.EventDates" item-key="id" class="draggable" :filter="'.checkbox-icon'">
           <template #item="{ element }">
             <div class="date-selector">
               <label class="label checkbox-svg" :for="'date-' + element.id">
               <input 
                 type="checkbox"
+                :id="'date-' + element.id" 
                 :name="'date-' + element.id" 
                 v-model="element.selected" 
                 @change="updateResponse(date.id, date.selected)"/>
@@ -27,6 +28,11 @@
                 </svg>
   
                 {{ element.proposed_date }}
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" class="menu-icon">
+                  <path d="M14 5.16666H2C1.72667 5.16666 1.5 4.94 1.5 4.66666C1.5 4.39333 1.72667 4.16666 2 4.16666H14C14.2733 4.16666 14.5 4.39333 14.5 4.66666C14.5 4.94 14.2733 5.16666 14 5.16666Z" fill="#A8ACB7"/>
+                  <path d="M14 8.5H2C1.72667 8.5 1.5 8.27333 1.5 8C1.5 7.72667 1.72667 7.5 2 7.5H14C14.2733 7.5 14.5 7.72667 14.5 8C14.5 8.27333 14.2733 8.5 14 8.5Z" fill="#A8ACB7"/>
+                  <path d="M14 11.8333H2C1.72667 11.8333 1.5 11.6067 1.5 11.3333C1.5 11.06 1.72667 10.8333 2 10.8333H14C14.2733 10.8333 14.5 11.06 14.5 11.3333C14.5 11.6067 14.2733 11.8333 14 11.8333Z" fill="#A8ACB7"/>
+                </svg>
               </label>
             </div>
           </template>
@@ -285,7 +291,16 @@
       display: none;
     }
 
+    .menu-icon {
+      margin-left: auto;
+      /* position: absolute;
+      left: 7dvw;
+      transform: translateX(-50%); */
+      scale: 1.3;
+    }
+
     .checkbox-svg {
+      width: auto;
       display: flex;
       align-items: center;
       gap: 8px;
