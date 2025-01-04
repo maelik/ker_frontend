@@ -133,7 +133,7 @@
     onMounted(() => {
       fetchEventDetails();
       fetchDateFavorite();
-      if (!userStore.token) {
+      if (!userStore.email) {
         router.push('/404');
       }      
     });

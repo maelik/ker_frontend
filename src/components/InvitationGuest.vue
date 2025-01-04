@@ -72,6 +72,7 @@
       if (formGuestStore.email && event.value) {
         formGuestStore.updateEmail(formGuestStore.email);
         userStore.resetStore();
+        userStore.updateEmail(formGuestStore.email);
         router.push({ name: 'EventDetails', params: { id: event.value.event.id } });
       } else {
         alert('Veuillez entrer un email.');
