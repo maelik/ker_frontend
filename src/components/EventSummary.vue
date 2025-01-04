@@ -235,14 +235,14 @@
 
 .btn {
   flex-basis: 50%;
-  height: 50px;
+  height: 40px;
   padding: 0px;
   border: none;
   cursor: pointer;
   align-items: center;
   border-radius: 4px;
   font-family: 'General sans';
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -252,9 +252,10 @@
 }
 
 .not-selected {
-  background-color: #ebedf2;
+  background-color: #FFFFFF;
   color: #131313;  
   opacity: 0.6;
+  border: 1px solid #A8ACB7;
 }
 
 </style>

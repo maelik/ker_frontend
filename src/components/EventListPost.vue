@@ -24,7 +24,7 @@
             <span class="date">{{ formatDate(discussion.createdAt) }}</span>
           </div>
           <div class="actions">
-            <button class="reply-button" @click="findDiscussion(discussion.eventId, discussion.id)">Répondre</button>
+            <button class="reply-button" @click="findDiscussion(discussion.eventId, discussion.id)">{{ discussion.discussionCount > 0 ? `Voir discussion` : 'Répondre' }}</button>
           </div>
         </div>
       </div>
@@ -321,8 +321,7 @@
 
   .reply-button {
     background-color: #ffffff;
-    color: black;
-    border: 1px solid #ebedf2;
+    border: 1px solid #131313;
     height: 30px;
     width: 100%;
     border-radius: 4px;
@@ -331,7 +330,7 @@
     font-family: 'Switzer';
     font-size: 12px;
     font-weight: 400;
-    color: #a8acb7;
+    color: #131313;
   }
 
   .padding-bottom {

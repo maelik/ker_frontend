@@ -20,7 +20,7 @@
                 :id="'date-' + element.id" 
                 :name="'date-' + element.id" 
                 v-model="element.selected" 
-                @change="updateResponse(date.id, date.selected)"/>
+                @change="updateResponse(element.id, element.selected)"/>
   
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="checkbox-icon">
                   <rect x="3.75" y="3.75" width="16.5" height="16.5" rx="2.25" :stroke="element.selected ? '#131313' : '#a8acb7'" stroke-width="1.5"/>
