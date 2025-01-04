@@ -26,7 +26,7 @@
       <p class="indication">Juste comme ça.</p>
       <div class="create-event-container">
         <button class="btn-create-event" @click="createEvent">Créer un évènement</button>
-        <p @click="showEmailInput">ou retrouve tes évènements déjà créés</p>
+        <a href="javascript:void(0);" @click="showEmailInput">ou retrouve tes évènements déjà créés</a>
       </div>
   
       <div class="email-retrieve-container" ref="containerEmail">
@@ -79,8 +79,7 @@
       router.push({ name: 'Step1' }); // Redirection vers le formulaire de création d'événement
     };
 
-    const  showEmailInput = (event) => {
-      event.preventDefault();
+    const  showEmailInput = () => {
       const timelineShowInputEmail = gsap.timeline();
 
       timelineShowInputEmail
@@ -379,9 +378,10 @@
     bottom: 0;
   }
 
-  .create-event-container P {
+  .create-event-container a {
     text-decoration: underline;
     cursor: pointer;
+    color: #000000;
     font-size: 14px;
     font-weight: 500;
     line-height: 26px;
