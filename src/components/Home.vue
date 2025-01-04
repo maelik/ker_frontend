@@ -79,7 +79,8 @@
       router.push({ name: 'Step1' }); // Redirection vers le formulaire de création d'événement
     };
 
-    const  showEmailInput = () => {
+    const  showEmailInput = (event) => {
+      event.preventDefault();
       const timelineShowInputEmail = gsap.timeline();
 
       timelineShowInputEmail

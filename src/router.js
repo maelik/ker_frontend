@@ -19,9 +19,19 @@ import ListExpenses from './components/ListExpenses.vue';
 import ExpenseDetails from './components/ExpenseDetails.vue';
 import InvitationGuest from './components/InvitationGuest.vue';
 import CreateExpense from './components/CreateExpense.vue';
+import NotFound from './components/NotFound.vue';
+
 
 const routes = [
   { path: '/', component: Home },
+  {
+    path: '/404',
+    component: NotFound,
+  },
+  {
+    path: '/:pathMatch(.*)*',  // Cette ligne attrape toutes les routes non définies
+    component: NotFound,
+  },
   { path: '/events', name: 'EventList', component: EventList },
   { 
     path: '/events/:id', 

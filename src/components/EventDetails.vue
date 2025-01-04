@@ -56,13 +56,15 @@
   
   <script setup >
     import { ref, onMounted } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { useUserStore } from '../stores/userStore';
     import EventSummary from './EventSummary.vue';
 
     const route = useRoute();
+    const router = useRouter();
     const event = ref({});
     const userStore = useUserStore();
+    
     const loadingEvent = ref(true);
     const loadingFavoriteDate = ref(true);
     const error = ref(null);
@@ -131,6 +133,9 @@
     onMounted(() => {
       fetchEventDetails();
       fetchDateFavorite();
+      if (!userStore.token) {
+        router.push('/404');
+      }      
     });
 
   </script>
