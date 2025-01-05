@@ -84,9 +84,7 @@
     onMounted(() => {
       fetchEventDetails();
       timelineAnimationGradient
-        .fromTo(bg.value,{
-          backgroundSize: '300%',
-        },{
+        .to(bg.value,{
           delay: 0.5,
           duration: 0.3,
           backgroundSize: '100%',
@@ -119,12 +117,13 @@
   }
 
   .bg-gradient {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    position: fixed;
     width: 100dvw;
-    height: 100dvh;
+    height: 120dvh;
     background-image: url('/assets/Gradient bg.png');
+    background-size: 300%;
+    background-repeat: no-repeat;
+    background-position: center;
     opacity: 0.5;
     z-index: -1;
   }

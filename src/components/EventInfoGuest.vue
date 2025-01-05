@@ -9,7 +9,7 @@
         <label class="label" for="user-name">Quel est ton nom ?</label>
         <input class="input-form" v-model="formGuestStore.guestName" id="user-name" type="text" placeholder="Ton nom" />
   
-        <label class="label">Voter pour une date</label>
+        <label class="label">Vote et ordonne les dates qui t'arrange le plus</label>
 
         <Draggable v-model="event.EventDates" item-key="id" class="draggable" :filter="'.checkbox-icon'" @end="updateOrder">
           <template #item="{ element }">
