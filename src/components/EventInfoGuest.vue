@@ -11,7 +11,7 @@
   
         <label class="label">Voter pour une date</label>
 
-        <Draggable v-model="event.EventDates" item-key="id" class="draggable" :filter="'.checkbox-icon'">
+        <Draggable v-model="event.EventDates" item-key="id" class="draggable" :filter="'.checkbox-icon'" @end="updateOrder">
           <template #item="{ element }">
             <div class="date-selector">
               <label class="label checkbox-svg" :for="'date-' + element.id">
@@ -64,7 +64,7 @@
     const error = ref(null);   
     const API_URL = import.meta.env.DEV  
     ? `${window.location.protocol}//${window.location.hostname}:3000`
-    : import.meta.env.VITE_API_URL; 
+    : import.meta.env.VITE_API_URL;     
     
     //fonction qui créer le guest
     const fetchGuestInvitation = async () => {
@@ -120,19 +120,23 @@
         if (!response.ok) {
           throw new Error('Erreur HTTP');
         }
-        const guestResponses = await response.json();        
+        const guestResponses = await response.json();
         
         let responseDate = [];
         
         
         event.value.EventDates.forEach(date => {
-          const responseGuest = guestResponses.GuestResponses.find(res => res.EventDate.proposed_date === date.proposed_date);          
+          const responseGuest = guestResponses.GuestResponses.find(res => res.EventDate.proposed_date === date.proposed_date);                   
           date.selected = responseGuest ? responseGuest.response : false;
+          date.order = responseGuest && responseGuest.order !== null ? responseGuest.order : index + 1;
           responseDate.push({
             "eventDateId" : date.id,
-            "responseValue":responseGuest ? responseGuest.response : false
+            "responseValue":responseGuest ? responseGuest.response : false,
+            "order" : responseGuest && responseGuest.order !== null ? responseGuest.order : index + 1
           });
         });
+        event.value.EventDates.sort((a, b) => a.order - b.order);
+        
         formGuestStore.updateResponses(responseDate);
         
         
@@ -144,7 +148,19 @@
       }
     };
 
-    //
+    const updateOrder = () => {
+      event.value.EventDates.forEach((date, index) => {  
+        const order = index + 1;      
+        date.order = order;
+        const responseGuest = formGuestStore.responses.find(res => res.eventDateId === date.id);
+        if (responseGuest) {
+          responseGuest.order = order;
+        }
+        
+      });
+      
+    };
+
     const updateResponse = (eventDateId, responseValue) => {
       const responseIndex = formGuestStore.responses.findIndex(res => res.eventDateId === eventDateId);
       if (responseIndex !== -1) {
@@ -157,7 +173,7 @@
     };
     
     // fonction pour modifier les réponses
-    const saveGuestResponses = async () => {
+    const saveGuestResponses = async () => {      
       try {
         const guestResponse = await fetch(`${API_URL}/api/guests/${userStore.token}/event/${route.params.id}/response`, {
           method: 'POST',
@@ -170,7 +186,7 @@
             responses: formGuestStore.responses,
           }),
         });
-
+        
         // Vérification si la requête est réussie
         if (!guestResponse.ok) {
           throw new Error('Erreur lors de la soumission de la réponse');
