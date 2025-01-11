@@ -253,6 +253,8 @@
   }
 
   .gradient {
+    position: fixed;
+    top: 0px;
     width: 100%;
     height: 40dvh;
     background: radial-gradient(ellipse 200% 120% at top center, #e8f599 30%, #fff 50%);
