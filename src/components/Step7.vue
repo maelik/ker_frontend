@@ -141,10 +141,10 @@
 <style scoped>
 
 .container-bg {
-  margin-top: 10dvh;
+  margin-top: 15%;
   position: relative;
   z-index: 1;
-  width: 100dvw;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -153,15 +153,14 @@
 
 .bg-gradient {
   position: fixed;
-  transform: translateY(-20dvh);
-  width: 100dvw;
-  height: 120dvh;
+  transform: translateY(-20%);
+  width: 100%;
+  height: 150%;
   background-image: url('/assets/Gradient bg.png');
   background-size: 300%;
   background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.5;
-  z-index: -1;
+  opacity: 0.8;
 }
 
 .container-bg > h1 {
@@ -198,6 +197,12 @@ p {
 
 .redirect-container > svg {
   transform: rotate(180deg);
+}
+
+@media (orientation: landscape) and (min-width: 768px) {
+  .bg-gradient {
+    width: 40dvw; /* largeur de view-container */
+  }
 }
 
 </style>

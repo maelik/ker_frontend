@@ -101,8 +101,8 @@
 
 .container {
   display: grid;
-  grid-template-rows: 20dvh 1fr;
-  height: 100dvh;
+  grid-template-rows: 20% 80%;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -130,20 +130,22 @@
   width: 100%;
   position: absolute;
   transition: 0.3s ease-out;
-  z-index: -1;
 }
 
 .form {
   grid-row: 2;
   justify-self: center;
+  height: 100%;
+  width: 100%;
 }
 
 .gradient-footer {
-  z-index: -1;
-  position: fixed;
-  bottom: 0px;
-  width: 100%;
+  position: absolute;
+  bottom: -25px;
+  left: -45px;
+  width: 130%;
   height: auto;
+  pointer-events: none;
 }
 
 </style>

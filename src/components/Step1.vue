@@ -4,7 +4,8 @@
         <TransitionForm>
           <div class="centered">
             <h2>Ton email</h2>
-            <input v-model="formStore.email" placeholder="email@exemple.fr" type="email" />
+            <input v-model="formStore.email" placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail"/>
+            <p v-if="emailError" class="error-message">{{ emailError }}</p>
           </div>
         </TransitionForm>
       </div>
@@ -25,11 +26,22 @@
     const formStore = useFormStore();
     const router = useRouter();
     const button = ref(null);
+    const emailError = ref("");
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
-    const isDisabled = computed(() => formStore.email.length < 1);
+    const isDisabled = computed(() => formStore.email.length < 1 || !emailRegex.test(formStore.email));
+
+    const validateEmail = () => {      
+       if (!emailRegex.test(formStore.email)) {
+        emailError.value = "Mauvaise syntaxe de l'adresse mail";
+        return false;
+      }
+      emailError.value = ""; // Pas d'erreur
+      return true;
+    };
 
     const nextStep = () => {
-      if (formStore.email) {
+      if (formStore.email && validateEmail()) {
         // Aller à la prochaine étape (Step 2)
         router.push({ name: 'Step2' });
       } else {
@@ -46,7 +58,7 @@
         },{
           delay: 0.5,
           duration: 0.3,
-          y: 'Opx'
+          y: '0px'
         }
       )
     });
@@ -68,13 +80,13 @@
   .container-children {
     display: flex;
     flex-direction: column;
-    height: 80dvh;
+    height: 100%;
   }
 
   .input-container {
     width: 75%;
     align-self: center;
-    height: 60dvh;
+    height: 75%;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -95,8 +107,7 @@
 
   .centered > input {
     width: 100%;
-    height: 8vh;
-    padding: 15px;
+    padding: 16px;
     background-color: rgba(0, 0, 0, 0.05);
     border: none;
     border-radius: 4px;
@@ -116,12 +127,27 @@
     font-family: 'Switzer';
   }
 
+  input.invalid {
+    outline: 1px solid #ee5253 !important;
+  }
+
+  .error-message {
+    position: absolute;
+    margin-top: 5px;
+    color: #ee5253;
+    font-size: 0.9em;
+    font-family: 'General sans';
+    font-weight: 400;
+  }
+
   .action-container {
-    width: 100dvw;
-    height: 20dvh;
+    z-index: 2;
+    width: 100%;
+    height: 25%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
   }
 
   .action-container > .next {
@@ -131,7 +157,7 @@
     width: 90%;
     border: none;
     border-radius: 4px;
-    height: 42px;
+    height: 46px;
     position: absolute;
     bottom: 3dvh;
     transition: background-color 0.3s ease, color 0.3s ease;
