@@ -102,8 +102,10 @@
 .container {
   display: grid;
   grid-template-rows: 20% 80%;
+  width: 100%;
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 .timeline {

@@ -3,15 +3,15 @@
       <div class="input-container">
         <TransitionForm>
           <div class="centered">
-            <h2>Ton email</h2>
-            <input v-model="formStore.email" placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail"/>
-            <p v-if="emailError" class="error-message">{{ emailError }}</p>
+            <h2 :style="{ position: 'relative', bottom: `${inputPosition}px` }">Ton email</h2>
+            <input v-model="formStore.email" :style="{ position: 'relative', bottom: `${inputPosition}px` }" placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail" @focus="adjustInputPosition"/>
+            <p v-if="emailError" :style="{ position: 'relative', bottom: `${inputPosition}px` }" class="error-message">{{ emailError }}</p>
           </div>
         </TransitionForm>
       </div>
       <div class="action-container">
         <p>Nous l'utiliserons pour que tu puisses retrouver tes événements en cours</p>
-        <button class="next" @click="nextStep" :disabled="isDisabled" :class="{ disabled: isDisabled, enabled: !isDisabled }" ref="button">Suivant</button>
+        <button class="next" :style="{ bottom: `${buttonOffset}px` }" @click="nextStep" :disabled="isDisabled" :class="{ disabled: isDisabled, enabled: !isDisabled }" ref="button">Suivant</button>
       </div>
     </div>
   </template>
@@ -19,25 +19,48 @@
   <script setup >
     import { useFormStore } from '../stores/formStore';
     import { useRouter } from 'vue-router';
-    import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
+    import { computed, onMounted, onUnmounted, onBeforeUnmount, ref } from 'vue';
     import TransitionForm from '@/components/TransitionForm.vue';
     import { gsap} from 'gsap';
 
     const formStore = useFormStore();
     const router = useRouter();
     const button = ref(null);
+    const buttonOffset = ref(20);
+    const inputPosition = ref(0)
     const emailError = ref("");
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
     const isDisabled = computed(() => formStore.email.length < 1 || !emailRegex.test(formStore.email));
 
-    const validateEmail = () => {      
+    const validateEmail = () => {  
+      inputPosition.value = 0;
+      adjustButtonPosition();    
        if (!emailRegex.test(formStore.email)) {
         emailError.value = "Mauvaise syntaxe de l'adresse mail";
         return false;
       }
       emailError.value = ""; // Pas d'erreur
       return true;
+    };
+
+    const adjustInputPosition = () => {
+      // Ajuste la hauteur de l'input lorsque l'utilisateur le sélectionne
+      inputPosition.value = 60; // Augmente la hauteur de l'input pour s'adapter au clavier
+      adjustButtonPosition();
+    };
+
+    const adjustButtonPosition = () => {
+      const viewportHeight = window.visualViewport.height;
+      const windowHeight = window.innerHeight;
+
+      if (viewportHeight < windowHeight) {
+        const keyboardHeight = windowHeight - viewportHeight;
+        buttonOffset.value = keyboardHeight + 20; // Ajoute un espace au-dessus du clavier
+        
+      } else {
+        buttonOffset.value = 20; // Réinitialise la position
+      }
     };
 
     const nextStep = () => {
@@ -61,6 +84,11 @@
           y: '0px'
         }
       )
+      window.visualViewport.addEventListener("resize", adjustButtonPosition);
+    });
+
+    onUnmounted(() => {
+      window.visualViewport.removeEventListener("resize", adjustButtonPosition);
     });
 
     onBeforeUnmount(() => {
@@ -159,7 +187,7 @@
     border-radius: 4px;
     height: 46px;
     position: absolute;
-    bottom: 3dvh;
+    bottom: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   .action-container > .enabled{
