@@ -114,14 +114,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  position: relative;
 }
 
 .header {
-  position: fixed;
+  position: absolute;
   display: flex;
-  width: 90dvw;
+  width: 90%;
   justify-content: space-between;
-  padding: 16px 5dvw 20px 5dvw;
+  padding: 16px 5% 20px 5%;
   z-index: 1;
   background-color: #FFFFFF;
 }
@@ -144,7 +146,7 @@
 .event-item {
   margin-top: 80px;
   height: 20dvh;
-  width: 90dvw;
+  width: 90%;
   border-radius: 4px;
   border: 1px solid #F5F6F8;
   display: flex;
@@ -191,7 +193,6 @@
 }
 
 .gradient-event {
-  z-index: -1;
   position: absolute;
   height: 100%;
   width: auto;
@@ -201,7 +202,7 @@
 
 .date-container {
   display: flex;
-  width: calc(90dvw - 24px);
+  width: calc(90% - 24px);
   align-items: center;
   margin: 10px 0px 30px 0px;
   background-color: #F5F6F8;
@@ -227,7 +228,7 @@
 }
 
 .event-participation {
-  width: 90dvw;
+  width: 90%;
   display: flex;
   gap: 15px;
   margin-bottom: 20px;

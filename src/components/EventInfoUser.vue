@@ -121,6 +121,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .info-container {
@@ -147,7 +148,7 @@
 form {
   display: flex;
   flex-direction: column;
-  width: 100dvw;
+  width: 100%;
   height: auto;
   max-height: 100%;
   align-items: center;
@@ -157,7 +158,7 @@ form {
 .form-size {
   display: flex;
   flex-direction: column;
-  width: 75dvw;
+  width: 75%;
 }
 
 .label {
@@ -165,12 +166,12 @@ form {
   font-size: 16px;
   font-weight: 500;
   margin-top: 10px;
-  width: 70dvw;
+  width: 70%;
 }
 
 .input-form {
-  width: calc(75dvw - 30px);
-  height: 8dvh;
+  width: calc(100% - 30px);
+  height: 55px;
   flex: 0 0 auto;
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.05);
@@ -200,7 +201,7 @@ form {
 
 .form-size > button {
   background-color: #000000;
-  width: 75dvw;
+  width: 100%;
   color: white;
   padding: 10px;
   border: none;
@@ -218,7 +219,7 @@ form {
 }
 
 .dp__main :deep(.dp__input) {
-  height: 7dvh;
+  height: 55px;
   background-color: rgba(0, 0, 0, 0.05);
   border: none;
   border-radius: 4px;

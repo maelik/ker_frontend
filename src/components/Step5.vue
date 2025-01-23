@@ -248,7 +248,7 @@
 }
 
 .datepicker-container {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: 55dvh;
   width: 100%;
   z-index: 100;

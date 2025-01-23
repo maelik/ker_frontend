@@ -4,7 +4,7 @@
         <TransitionForm>
           <div class="centered">
             <h2 :style="{ position: 'relative', bottom: `${inputPosition}px` }">Une description</h2>
-            <textarea :style="{ position: 'relative', bottom: `${inputPosition}px` }" v-model="formStore.description" placeholder="Des besoins ? Un thème? (courses, couchage etc ...)" @blur="resetInputPosition" @focus="adjustInputPosition"></textarea>
+            <textarea :style="{ position: 'relative', bottom: `${inputPosition}px` }" v-model="formStore.description" placeholder="Des besoins ? Un thème? (courses, couchage etc ...)" @blur="resetInputPosition" @focus="focusAction" @keyup.enter="nextStep"></textarea>
           </div>
         </TransitionForm>
       </div>
@@ -35,26 +35,26 @@
     const inputPosition = ref(0);
 
     const resetInputPosition = () => {
-      inputPosition.value = 0;
-      adjustButtonPosition();
+      adjustButtonInputPosition();
     };
 
-    const adjustInputPosition = () => {
+    const focusAction = () => {
       // Ajuste la hauteur de l'input lorsque l'utilisateur le sélectionne
-      inputPosition.value = 120; // Augmente la hauteur de l'input pour s'adapter au clavier
-      adjustButtonPosition();
+      adjustButtonInputPosition();
     };
 
-    const adjustButtonPosition = () => {
+    const adjustButtonInputPosition = () => {
       const viewportHeight = window.visualViewport.height;
       const windowHeight = window.innerHeight;
 
       if (viewportHeight < windowHeight) {
         const keyboardHeight = windowHeight - viewportHeight;
         buttonOffset.value = keyboardHeight + 20; // Ajoute un espace au-dessus du clavier
+        inputPosition.value = 120; // Augmente la hauteur de l'input pour s'adapter au clavier
         
       } else {
         buttonOffset.value = 20; // Réinitialise la position
+        inputPosition.value = 0;
       }
     };
     
@@ -79,11 +79,11 @@
           y: '0px'
         }
       )
-      window.visualViewport.addEventListener("resize", adjustButtonPosition);
+      window.visualViewport.addEventListener("resize", adjustButtonInputPosition);
     });
 
     onUnmounted(() => {
-      window.visualViewport.removeEventListener("resize", adjustButtonPosition);
+      window.visualViewport.removeEventListener("resize", adjustButtonInputPosition);
     })
 
     onBeforeUnmount(() => {

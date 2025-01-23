@@ -245,25 +245,26 @@
     overflow: hidden;
     height: 100%;
     width: 100%;
+    background-color: #ffffff;
+    position: relative;
   }
 
   .logo {
-    position: fixed;
+    position: absolute;
     top: 16px;
   }
 
   .gradient {
-    position: fixed;
+    position: absolute;
     top: 0px;
     width: 100%;
-    height: 40dvh;
+    height: 40%;
     background: radial-gradient(ellipse 200% 120% at top center, #e8f599 30%, #fff 50%);
-    z-index: -1;
   }
   
   .container-title {
     height: 100px;
-    transform: translateY(-20vw);
+    transform: translateY(-20%);
     text-align: center;
     width: 100%;
   }
@@ -351,9 +352,9 @@
     font-family: 'BookmanJFPro Regular', sans-serif;
     font-style: italic;
     font-weight: 400;
-    font-size: 2dvh;
+    font-size: 14px;
     margin: 14px;
-    transform: translateY(-3dvh)
+    transform: translateY(60%)
   }
   
   .btn-create-event {
@@ -367,7 +368,7 @@
     margin: 0;
     border: none;
     width: 90%;
-    height: 7dvh;
+    height: 50px;
     cursor: pointer
   }
 
@@ -395,7 +396,7 @@
     position: absolute;
     bottom: -100dvh;
     width: 100%;
-    height: 25dvh;
+    height: 25%;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -412,8 +413,8 @@
     height: 24px;
     cursor: pointer;
     align-self: end;
-    margin-right: 3dvh;
-    margin-top: 5px;
+    margin-right: 8px;
+    margin-top: 8px;
   }
 
   .email-retrieve-container p {
@@ -426,15 +427,17 @@
     margin: 0;
     display: flex;
     align-items: center;
+    transform: translateY(-10px);
   }
   
   .input-container {
     flex: 1;
     display: inline-block;
-    width: 85%;
+    width: calc(100% - 30px);
     display: flex;
     align-items: center;
-    justify-content: center
+    justify-content: center;
+    transform: translateY(-10px);
   }
   
   .email-input {
@@ -459,7 +462,7 @@
     cursor: pointer;
     width: 44px;
     height: 36px;
-    right: 9%;
+    right: 7px;
   }
 
   .retrieve-events-button > svg {

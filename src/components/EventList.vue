@@ -18,9 +18,9 @@
       <div v-else>
         <div v-if="userStore.eventsCreated.length === 0"><p>Tu n'as pas encore créé d'événements.</p></div>
         <div v-else>
-          <div v-for="event in userStore.eventsCreated" :key="event.id">
+          <div v-for="event in userStore.eventsCreated" :key="event.id" class="event-item">
             <RouterLink :to="{ name: 'EventDetails', params: { id: event.id } }">
-              <div class="event-item">
+              <div>
                 <span class="event-name">{{ event.title }}</span>
                 <img alt="gradient event" :src="`/assets/${event['image-gradient']}`" class="gradient-event"/>
               </div>
@@ -41,6 +41,8 @@
           </div>
         </div>
       </div>
+
+      <div class="padding-bottom"></div>
     </div>
   </div>
 </template>
@@ -104,10 +106,16 @@
 
 <style scoped>
 
+.event-list-container {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+}
+
 .header {
   display: flex;
   justify-content: center;
-  height: 15dvh;
+  height: 15%;
 }
 
 .logo {
@@ -115,8 +123,8 @@
 }
 
 .event-section {
-  max-height: 85dvh;
-  padding: 0 5dvw;
+  max-height: 85%;
+  padding: 0 5%;
   overflow-y: scroll;
 }
 
@@ -154,7 +162,6 @@ a {
 }
 
 .gradient-event {
-  z-index: -1;
   position: absolute;
   height: 100%;
   width: auto;
@@ -167,6 +174,12 @@ p {
   font-family: 'General sans';
   font-weight: 500;
   color: #070303;
+}
+
+.padding-bottom {
+  min-height: 100px;
+  width: 100%;
+  background-color: transparent;
 }
 
 </style>

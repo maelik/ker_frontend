@@ -1,24 +1,60 @@
-<script setup>
-  import { computed } from 'vue';
-  import { useRoute } from 'vue-router';
-
-  const route = useRoute();
-
-  const mainClass = computed(() => (route.name !== 'home' ? 'default-styles' : ''));
-  
-
-</script>
-
 <template>
   <main :class="mainClass">
-    <div class="wrapper">
-      <div class="shadow-container"></div>
-      <div class="view-container">
-          <router-view />
+    <div class="wrapper" :class="wrapperClass">
+      <div :class="positionCentral" class="divCentral">
+        <div :class="positionShadow" class="shadow-container"></div>
+        <div :class="clipClass, positionView" class="view-container">
+            <router-view />
+        </div>
       </div>
     </div>    
   </main>
 </template>
+
+<script setup>
+  import { computed, } from 'vue';
+  import { useRoute } from 'vue-router';
+
+  const route = useRoute();
+
+  const mainClass = computed(() => (/* route.name !== 'home' ? 'default-styles' : '' */ 'default-styles'));
+  const clipClass = computed(() => {
+    if (route.name === 'Step7' || route.name === 'InvitationGuest') {
+      return 'clip-class';
+    }
+    return '';
+  });
+
+  const positionCentral = computed(() => {
+    if (route.name === 'home' || route.matched.some(r => r.name === 'CreateEvent') || route.name === 'InvitationGuest') {
+      return 'centered';
+    }
+    return 'margin';
+  });
+
+  const positionShadow = computed(() => {
+    if (route.name === 'home' || route.matched.some(r => r.name === 'CreateEvent') || route.name === 'InvitationGuest') {
+      return 'centered';
+    }
+    return 'scroll';
+  });
+
+  const positionView = computed(() => {
+    if (route.name === 'home' || route.matched.some(r => r.name === 'CreateEvent') || route.name === 'InvitationGuest') {
+      return 'centered';
+    }
+    return 'scroll';
+  });
+
+  const wrapperClass = computed(() => {
+    if (route.name === 'home' || route.matched.some(r => r.name === 'CreateEvent') || route.name === 'InvitationGuest') {
+      return 'fix';
+    }
+    return 'auto';
+  });
+  
+
+</script>
 
 <style>
 html, body{
@@ -29,10 +65,22 @@ html, body{
 }
 /* Mobile first */
 
+.default-styles {
+  overflow: hidden;
+}
+
 .container {
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
+}
+
+.divCentral {
+  position: relative;
+}
+
+.shadow-container {
+  position: fixed;
 }
 
 .view-container {
@@ -43,27 +91,31 @@ html, body{
 @media (orientation: portrait) and (min-width: 768px) and (max-width: 1024px) {
   .default-styles .wrapper {
     background-color: #F5F6F8;
-    height: 100dvh;
     width: 100dvw;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
+    overflow-y: auto;
+    display: flex;    
+    flex-direction: column;
     align-items: center;
   }
 
   .default-styles .view-container {
-    width: 70dvw;
-    height: 80dvh;
+    width: 500px;
     border-radius: 16px;
-    margin: 0 auto;
     overflow: hidden;
+    position: relative;
+  }
+
+  .clip-class {
     clip-path: inset(0 0 0 0 round 16px);
   }
 
   .default-styles .shadow-container {
     position: absolute;
-    width: 70dvw;
-    height: 80dvh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 500px;
     border-radius: 16px;
     box-shadow: 
     4px 18px 41px rgba(169, 75, 170, 0.1),
@@ -71,41 +123,86 @@ html, body{
     35px 166px 102px rgba(169, 75, 170, 0.05),
     62px 295px 121px rgba(169, 75, 170, 0.01),
     97px 461px 132px rgba(169, 75, 170, 0);
+  }
+
+  .centered {
+    height: 660px;
+  }
+
+  .scroll {
+    height: auto;
+  }
+  
+  .margin {
+    margin: 135px 0px;
+  }
+
+  .fix {
+    height: 100dvh;
+    justify-content: center;
+  }
+
+  .auto {
+    height: auto;
   }
 }
 
 @media (orientation: landscape) and (min-width: 768px) {
   .default-styles .wrapper {
     background-color: #F5F6F8;
-    height: 100dvh;
     width: 100dvw;
-    overflow: hidden;
+    overflow-y: auto;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
   }
 
   .default-styles .view-container {
-    width: 40dvw;
-    height: 80dvh;
+    width: 500px;
     border-radius: 16px;
-    margin: 0 auto;
     overflow: hidden;
-    clip-path: inset(0 0 0 0 round 16px);
     position: relative;
+  }
+
+  .clip-class {
+    clip-path: inset(0 0 0 0 round 16px);
   }
 
   .default-styles .shadow-container {
     position: absolute;
-    width: 40dvw;
-    height: 80dvh;
+    width: 500px;
     border-radius: 16px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     box-shadow: 
     4px 18px 41px rgba(169, 75, 170, 0.1),
     15px 74px 75px rgba(169, 75, 170, 0.09),
     35px 166px 102px rgba(169, 75, 170, 0.05),
     62px 295px 121px rgba(169, 75, 170, 0.01),
     97px 461px 132px rgba(169, 75, 170, 0);
+  }
+
+  .centered {
+    height: 660px;
+  }
+
+  .scroll {
+    height: auto;
+  }
+
+  .margin {
+    margin: 135px 0px;
+  }
+
+  .fix {
+    height: 100dvh;
+    justify-content: center;
+  }
+
+  .auto {
+    height: auto;
   }
 }
 

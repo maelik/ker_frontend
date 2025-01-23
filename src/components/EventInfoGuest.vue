@@ -125,7 +125,7 @@
         let responseDate = [];
         
         
-        event.value.EventDates.forEach(date => {
+        event.value.EventDates.forEach((date, index) => {
           const responseGuest = guestResponses.GuestResponses.find(res => res.EventDate.proposed_date === date.proposed_date);                   
           date.selected = responseGuest ? responseGuest.response : false;
           date.order = responseGuest && responseGuest.order !== null ? responseGuest.order : index + 1;
@@ -237,7 +237,7 @@
     form {
       display: flex;
       flex-direction: column;
-      width: 75dvw;
+      width: 75%;
       margin: 0 auto;
       padding-top: 20px;
     }
@@ -247,11 +247,11 @@
       font-size: 16px;
       font-weight: 500;
       margin-top: 10px;
-      width: 70dvw;
+      width: 100%;
     }
 
     .input-form {
-      width: calc(75dvw - 30px);
+      width: calc(100% - 30px);
       height: 8dvh;
       flex: 0 0 auto;
       border-radius: 4px;
@@ -277,7 +277,7 @@
 
     form > button {
       background-color: #000000;
-      width: 75dvw;
+      width: 100%;
       color: white;
       padding: 10px;
       border: none;
@@ -291,7 +291,7 @@
     }
 
     .date-selector {
-      width: calc(75dvw - 30px);
+      width: calc(100% - 30px);
       border: 1px solid #ebedf2;
       margin-bottom: 8px;
       border-radius: 4px;

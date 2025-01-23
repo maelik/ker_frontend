@@ -4,7 +4,7 @@
         <TransitionForm>
           <div class="centered">
             <h2 :style="{ position: 'relative', bottom: `${inputPosition}px` }">Ton email</h2>
-            <input v-model="formStore.email" :style="{ position: 'relative', bottom: `${inputPosition}px` }" placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail" @focus="adjustInputPosition"/>
+            <input v-model="formStore.email" :style="{ position: 'relative', bottom: `${inputPosition}px` }" placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail" @focus="focusAction" @keyup.enter="nextStep"/>
             <p v-if="emailError" :style="{ position: 'relative', bottom: `${inputPosition}px` }" class="error-message">{{ emailError }}</p>
           </div>
         </TransitionForm>
@@ -34,32 +34,31 @@
     const isDisabled = computed(() => formStore.email.length < 1 || !emailRegex.test(formStore.email));
 
     const validateEmail = () => {  
-      inputPosition.value = 0;
-      adjustButtonPosition();    
+      adjustButtonInputPosition();    
        if (!emailRegex.test(formStore.email)) {
-        emailError.value = "Mauvaise syntaxe de l'adresse mail";
+        emailError.value = "Veuillez renseigner un format d'email exemple : prenom@gmail.com";
         return false;
       }
       emailError.value = ""; // Pas d'erreur
       return true;
     };
 
-    const adjustInputPosition = () => {
-      // Ajuste la hauteur de l'input lorsque l'utilisateur le sélectionne
-      inputPosition.value = 60; // Augmente la hauteur de l'input pour s'adapter au clavier
-      adjustButtonPosition();
+    const focusAction = () => {
+      adjustButtonInputPosition();
     };
 
-    const adjustButtonPosition = () => {
+    const adjustButtonInputPosition = () => {
       const viewportHeight = window.visualViewport.height;
       const windowHeight = window.innerHeight;
 
       if (viewportHeight < windowHeight) {
         const keyboardHeight = windowHeight - viewportHeight;
         buttonOffset.value = keyboardHeight + 20; // Ajoute un espace au-dessus du clavier
+        inputPosition.value = 60;
         
       } else {
         buttonOffset.value = 20; // Réinitialise la position
+        inputPosition.value = 0; // Réinitialise la position
       }
     };
 
@@ -84,11 +83,11 @@
           y: '0px'
         }
       )
-      window.visualViewport.addEventListener("resize", adjustButtonPosition);
+      window.visualViewport.addEventListener("resize", adjustButtonInputPosition);
     });
 
     onUnmounted(() => {
-      window.visualViewport.removeEventListener("resize", adjustButtonPosition);
+      window.visualViewport.removeEventListener("resize", adjustButtonInputPosition);
     });
 
     onBeforeUnmount(() => {
@@ -156,13 +155,13 @@
   }
 
   input.invalid {
-    outline: 1px solid #ee5253 !important;
+    outline: 1px solid #EB7A78 !important;
   }
 
   .error-message {
     position: absolute;
     margin-top: 5px;
-    color: #ee5253;
+    color: #EB7A78;
     font-size: 0.9em;
     font-family: 'General sans';
     font-weight: 400;
