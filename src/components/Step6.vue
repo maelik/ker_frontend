@@ -118,6 +118,7 @@
   position: absolute;
   bottom: 20%;
   width: 100%;
+  height: auto;
 }
 
 .centered > h2 {

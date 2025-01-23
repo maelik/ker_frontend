@@ -223,6 +223,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: auto;
 }
 
 .centered-title {

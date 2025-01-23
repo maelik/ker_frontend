@@ -123,6 +123,7 @@
     position: absolute;
     bottom: 50%;
     width: 100%;
+    height: auto;
   }
 
   .centered > h2 {

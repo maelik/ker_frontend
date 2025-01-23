@@ -201,7 +201,7 @@ p {
 
 @media (orientation: landscape) and (min-width: 768px) {
   .bg-gradient {
-    width: 40dvw; /* largeur de view-container */
+    width: 500px; /* largeur de view-container */
   }
 }
 
