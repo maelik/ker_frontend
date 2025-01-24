@@ -325,6 +325,10 @@
       background-color: transparent;
     }
 
+    .back {
+      cursor: pointer;
+    }
+
     @media (min-width: 768px) {
       .post-form {
         position: relative;

@@ -298,6 +298,7 @@
   border-radius: 4px;
   height: 46px;
   background-color: #000;
+  cursor: pointer;
 }
 
 .btn-container > .previous > svg {
@@ -313,6 +314,7 @@
   border-radius: 4px;
   height: 46px;
   transition: background-color 0.3s ease, color 0.3s ease;
+  cursor: pointer;
 }
 .btn-container > .enabled{
   background-color: #000;
@@ -323,6 +325,10 @@
   color: #A8ACB7;
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+button {
+  cursor: pointer;
 }
 
 @media (orientation: landscape) and (min-width: 768px) {

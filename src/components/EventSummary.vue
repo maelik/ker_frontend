@@ -42,7 +42,7 @@
         <div class="event-favorite-date">
           <h4>Date favorite</h4>
           <div class="date-selector">
-            {{ favoriteDate.eventDate[0].proposed_date }}
+            {{ favoriteDate }}
           </div>        
         </div>
       </div>
@@ -71,7 +71,7 @@
         required: true
       },
       favoriteDate: {
-        type: Object,
+        type: String,
         required: true
       },
     });
@@ -282,6 +282,10 @@
   color: #131313;  
   opacity: 0.6;
   border: 1px solid #A8ACB7;
+}
+
+.back, button {
+  cursor: pointer;
 }
 
 @media (min-width: 768px) {

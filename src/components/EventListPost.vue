@@ -145,10 +145,10 @@
               <button class="reply-button" @click="findDiscussion(discussion.eventId, discussion.id)">{{ discussion.discussionCount > 0 ? `Voir discussion` : 'Répondre' }}</button>
             </div>
           </div>
-          <div class="padding-bottom"></div>
         </div>
 
       </div>
+      <div class="padding-bottom"></div>
     </div>
   </template>
   

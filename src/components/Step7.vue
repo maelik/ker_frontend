@@ -175,6 +175,7 @@
 .link-container {
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .link-container > button {
@@ -193,6 +194,7 @@ p {
   align-items: center;
   position: absolute;
   bottom: 15dvh;
+  cursor: pointer;
 }
 
 .redirect-container > svg {

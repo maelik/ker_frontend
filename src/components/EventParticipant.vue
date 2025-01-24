@@ -71,7 +71,6 @@
   
           </div>
   
-          <div class="padding-bottom"></div>
         </div>
         <div v-else id="sectionSvg">
           <svg width="209" height="128" viewBox="0 0 209 128" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -154,6 +153,7 @@
         </div>
 
       </div>
+      <div class="padding-bottom"></div>
     </div>
   </template>
 

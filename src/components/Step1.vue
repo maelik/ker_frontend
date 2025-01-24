@@ -189,6 +189,7 @@
     position: absolute;
     bottom: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
+    cursor: pointer;
   }
   .action-container > .enabled{
     background-color: #000;

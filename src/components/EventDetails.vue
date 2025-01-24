@@ -111,16 +111,22 @@
         if (!response.ok) {
           throw new Error('Erreur HTTP');
         }
-        favoriteDate.value = await response.json();
-        favoriteDate.value.eventDate.forEach(element => {
-          const date = new Date(element.proposed_date);
-          element.proposed_date = new Intl.DateTimeFormat("fr-FR", {
+
+        const data = await response.json();
+
+        if (data.message) {
+          favoriteDate.value = data.message;
+        }
+        
+        if (data.eventDate) {
+          const date = new Date(data.eventDate[0].proposed_date);
+          data.eventDate[0].proposed_date = new Intl.DateTimeFormat("fr-FR", {
             day: "2-digit",
             month: "long",
             year: "numeric",
-          }).format(date);        
-        });
-        
+          }).format(date);
+          favoriteDate.value = data.eventDate[0].proposed_date;
+        }
         
       } catch (err) {
         error.value = 'Erreur lors de la récupération des détails de l\'événement.';

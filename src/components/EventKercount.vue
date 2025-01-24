@@ -58,8 +58,6 @@
           </div>
       </div>
 
-      <div class="padding-bottom"></div>
-
     </div>
 
     <div v-else class="sectionSvg">
@@ -161,6 +159,7 @@
       </svg>
     </div>
 
+    <div class="padding-bottom"></div>
   </template>
   
   <script setup >
@@ -222,7 +221,8 @@
                 throw new Error('Erreur HTTP');
             }
             const data = await response.json();
-            if(data.isArray) {              
+            
+            if(data.tabPayParticipant && data.tabPayParticipant.isArray) {                          
               tabPayParticipant.value= data.tabPayParticipant; 
               tabPayParticipant.value.forEach(participant => {            
                 participant.pay = participant.pay > 0 ? `+${participant.pay}` : `${participant.pay}`;
@@ -415,6 +415,7 @@
       font-size: 14px;
       font-weight: 500;
       color: #ffffff;
+      cursor: pointer;
     }
 
     .padding-bottom {
@@ -429,6 +430,10 @@
       justify-content: center;
       width: 100%;
       margin-top: 7dvh;
+    }
+
+    button {
+      cursor: pointer;
     }
 
     @media (min-width: 768px) {
