@@ -1,6 +1,6 @@
 <template>
   <div class="event-list-container">
-    <div class="header">
+    <div class="header" :style="{ transform: `translateY(${translateY}px)` }">
       <RouterLink class="link" to="/">
           <svg ref="logo" width="89" height="44" viewBox="0 0 89 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo">
             <rect width="89" height="44" rx="21.5235" fill="black"/>
@@ -49,7 +49,7 @@
 
 
 <script setup >
-  import { ref, onMounted } from 'vue';
+  import { ref, onMounted, onUnmounted } from 'vue';
   import { useUserStore } from '../stores/userStore';
 
   const guestToken = ref('');
@@ -59,6 +59,20 @@
   const API_URL = import.meta.env.DEV  
     ? `${window.location.protocol}//${window.location.hostname}:3000`
     : import.meta.env.VITE_API_URL;
+
+  const translateY = ref(0); // Gère la position Y de l'effet parallax
+  const isWideScreen = ref(window.innerWidth >= 768);
+
+  // Fonction pour mettre à jour l'effet parallax
+  const handleScroll = () => {
+    const scrollTop = window.scrollY; // Distance scrollée
+    translateY.value = -scrollTop; // Ajuste le facteur parallax
+  };
+
+  // Fonction pour vérifier la taille de l'écran
+  const handleResize = () => {
+    isWideScreen.value = window.innerWidth >= 768; // Met à jour la condition
+  };
 
   const fetchEvents = async () => {
     try {
@@ -100,8 +114,21 @@
 
   // Appel API lors du montage du composant
   onMounted(() => {
+    handleResize(); // Vérifie initialement la largeur
+    window.addEventListener("resize", handleResize); // Écoute les changements de taille
+
+    if (isWideScreen.value) {
+      window.addEventListener("scroll", handleScroll); // Active l'effet parallax
+    }
+
     fetchEvents();
   });
+
+  onUnmounted(() => {
+    window.removeEventListener("resize", handleResize); // Nettoie les événements
+    window.removeEventListener("scroll", handleScroll); // Nettoie les événements
+  });
+
 </script>
 
 <style scoped>
@@ -180,6 +207,14 @@ p {
   min-height: 100px;
   width: 100%;
   background-color: transparent;
+}
+
+@media (min-width: 768px) {
+  .header {
+    position: fixed;
+    top: 24px;
+    width: 500px;
+  }
 }
 
 </style>

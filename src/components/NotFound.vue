@@ -80,7 +80,7 @@
 
     .text-container {
       flex: 0 0 33%;
-      width: 80dvw;
+      width: 80%;
     }
 
     .text-container > h1 {
@@ -114,11 +114,11 @@
 
     .svg-container {
       flex: 0 0 55%;
-      width: 100dvw;
+      width: 100%;
     }
 
     .svg {
-      width: 100dvw;
+      width: 100%;
       height: auto;
     }
 
@@ -126,6 +126,15 @@
       display: flex;
       flex-direction: column;
       justify-content: end;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        width: 500px;
+        height: 660px;
+        background-color: #F5F6F8;
+      }
+
     }
   </style>
   

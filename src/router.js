@@ -27,10 +27,12 @@ const routes = [
   {
     path: '/404',
     component: NotFound,
+    name: 'NotFound',
   },
   {
     path: '/:pathMatch(.*)*',  // Cette ligne attrape toutes les routes non définies
     component: NotFound,
+    name: 'NotFound',
   },
   { path: '/events', name: 'EventList', component: EventList },
   { 

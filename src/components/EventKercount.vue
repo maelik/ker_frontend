@@ -8,6 +8,9 @@
     <div v-if="loading" class="sectionSvg">Chargement des données...</div>
 
     <div v-else-if="recentExpenses.length > 0"class="event-kercount-container">
+
+      <button @click="addExpense" class="btnAdd">Ajouter une dépense</button>
+
       <h1>Dernières dépenses</h1>
       <div v-for="(expense, index) in recentExpenses" :key="index" class="expenseCard">
         <router-link :to="{ name: 'ExpenseDetails', params: { id,  expenseId : expense.id } }">
@@ -157,8 +160,6 @@
         <path d="M237.195 46.8496L245.385 56.0348" stroke="#A8ACB7" stroke-width="1.26547" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </div>
-
-    <button @click="addExpense" class="btnAdd">Ajouter une dépense</button>
 
   </template>
   
@@ -428,6 +429,15 @@
       justify-content: center;
       width: 100%;
       margin-top: 7dvh;
+    }
+
+    @media (min-width: 768px) {
+      .btnAdd {
+        position: relative;
+        margin: 20px 0px;
+        bottom: 0px;
+        width: 100%;
+      }
     }
   </style>
   

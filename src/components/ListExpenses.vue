@@ -19,6 +19,9 @@
   
     <div class="listExpensesContainer">
       <h1>Toutes les dépenses</h1>
+
+      <button @click="addExpense" class="btnAdd">Ajouter une dépense</button>
+
       <div v-for="(expense, index) in expenses" :key="index" class="expenseCard">
         <router-link :to="{ name: 'ExpenseDetails', params: { id,  expenseId : expense.id } }">
           <div class="description">
@@ -31,7 +34,7 @@
         </router-link>
       </div>
     </div>
-    <button @click="addExpense" class="btnAdd">Ajouter une dépense</button>
+    
     <div class="padding-bottom"></div>
   </div>
 </template>
@@ -63,6 +66,7 @@
     width: 100%;
     height: 100%;
     background-color: #ffffff;
+    overflow-y: auto;
   }
 
 
@@ -172,6 +176,15 @@
       min-height: 200px;
       width: 100%;
       background-color: transparent;
+    }
+
+    @media (min-width: 768px) {
+      .btnAdd {
+        position: relative;
+        margin: 20px 0px;
+        bottom: 0px;
+        width: 100%;
+      }
     }
 
 </style>

@@ -146,6 +146,7 @@
     width: 100%;
     height: 100%;
     background-color: #FFFFFF;
+    overflow-y: auto;
   }
 
   .event-tabs {
@@ -198,6 +199,49 @@
 
   .tab.active p {
     transform: translateY(15px);
+  }
+
+  @media (min-width: 768px) {
+    .event-tabs {
+      position: fixed;
+      flex-direction: column;
+      width: 120px;
+      height: auto;
+      top: 180px;
+      left: calc((100dvw - 800px) / 2);
+      transform: translateX(0%);
+      background-color: transparent;
+      border: none;
+      justify-content: start;
+    }
+
+    .tab {
+      color: #131313;
+      padding: 10px 0px;
+      border-radius: 4px;
+    }
+
+    .tab p {
+      transform: translateY(0px);
+      position: relative;
+    }
+
+    .tab .icon {
+      color: #131313;
+    }
+
+    .tab.active .icon {
+      transform: translateY(0px) scale(1);
+    }
+
+    .tab.active p {
+      transform: translateY(0px);
+      color: #FFFFFF;
+    }
+
+    .tab.active {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
   }
   </style>
   

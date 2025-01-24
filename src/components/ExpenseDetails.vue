@@ -1,4 +1,5 @@
 <template>
+  <div class="list-container">
     <div class="header">
         <RouterLink class="link" to="/">
             <svg ref="logo" width="89" height="44" viewBox="0 0 89 44" fill="none" xmlns="http://www.w3.org/2000/svg" class="logo">
@@ -37,6 +38,10 @@
           </div>
         </div>
     </div>
+
+    <div class="padding-bottom"></div>
+
+  </div>
 </template>
   
 <script setup> 
@@ -96,11 +101,18 @@
   
 <style scoped>
 
+    .list-container {
+      width: 100%;
+      height: 100%;
+      background-color: #ffffff;
+      overflow-y: auto;
+    }
+
     .header {
-      position: fixed;
+      position: sticky;
       display: flex;
-      padding: 16px 5dvw 20px 5dvw;
-      width: 90dvw;
+      padding: 16px 5% 20px 5%;
+      width: 90%;
       justify-content: space-between;
       margin-left: 50%;
       top: 0;
@@ -125,10 +137,9 @@
     }
 
     .expense-details {
-      padding-top: 90px;
       display: flex;
       flex-direction: column;
-      width: 75dvw;
+      width: 75%;
       margin: 0 auto;
     }
 
@@ -212,5 +223,11 @@
         color: #1A1A39;
         line-height: 16px;
         margin: 0;
+    }
+
+    .padding-bottom {
+      min-height: 200px;
+      width: 100%;
+      background-color: transparent;
     }
 </style>

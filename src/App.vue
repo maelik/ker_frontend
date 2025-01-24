@@ -17,7 +17,14 @@
 
   const route = useRoute();
 
-  const mainClass = computed(() => (/* route.name !== 'home' ? 'default-styles' : '' */ 'default-styles'));
+  const mainClass = computed(() => {
+    
+    if(/* route.name !== 'home' ||*/ route.name !== 'NotFound' ) {
+      return 'default-styles';
+    }
+    return ''
+  });
+
   const clipClass = computed(() => {
     if (route.name === 'Step7' || route.name === 'InvitationGuest') {
       return 'clip-class';
@@ -47,7 +54,7 @@
   });
 
   const wrapperClass = computed(() => {
-    if (route.name === 'home' || route.matched.some(r => r.name === 'CreateEvent') || route.name === 'InvitationGuest') {
+    if (route.name === 'home' || route.matched.some(r => r.name === 'CreateEvent') || route.name === 'InvitationGuest' || route.name === 'NotFound') {
       return 'fix';
     }
     return 'auto';
@@ -69,6 +76,10 @@ html, body{
   overflow: hidden;
 }
 
+.wrapper {
+  background-color: #F5F6F8;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -85,6 +96,9 @@ html, body{
 
 .view-container {
   height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Tablette et plus */
@@ -133,7 +147,7 @@ html, body{
     height: auto;
   }
   
-  .margin {
+  .default-styles .margin {
     margin: 135px 0px;
   }
 
@@ -192,7 +206,7 @@ html, body{
     height: auto;
   }
 
-  .margin {
+  .default-styles .margin {
     margin: 135px 0px;
   }
 
