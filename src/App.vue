@@ -78,6 +78,7 @@ html, body{
 
 .wrapper {
   background-color: #F5F6F8;
+  min-height: 100dvh;
 }
 
 .container {

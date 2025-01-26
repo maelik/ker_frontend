@@ -5,11 +5,12 @@
       <div class="line"></div>
     </div>
 
+    <button @click="addExpense" class="btnAdd">Ajouter une dépense</button>
+
     <div v-if="loading" class="sectionSvg">Chargement des données...</div>
 
     <div v-else-if="recentExpenses.length > 0"class="event-kercount-container">
 
-      <button @click="addExpense" class="btnAdd">Ajouter une dépense</button>
 
       <h1>Dernières dépenses</h1>
       <div v-for="(expense, index) in recentExpenses" :key="index" class="expenseCard">
@@ -416,6 +417,7 @@
       font-weight: 500;
       color: #ffffff;
       cursor: pointer;
+      z-index: 1;
     }
 
     .padding-bottom {
@@ -441,7 +443,7 @@
         position: relative;
         margin: 20px 0px;
         bottom: 0px;
-        width: 100%;
+        width: 75%;
       }
     }
   </style>

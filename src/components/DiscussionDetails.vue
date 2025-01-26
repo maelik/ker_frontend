@@ -191,6 +191,7 @@
       width: 100%;
       height: 100%;
       background-color: #FFFFFF;
+      overflow-y: auto;
     }
 
     .header {
@@ -358,7 +359,6 @@
       .header {
         height: 20px;
         padding: 0px;
-        width: 750px;
       }
     }
 
