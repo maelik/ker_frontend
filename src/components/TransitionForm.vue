@@ -12,7 +12,7 @@
   </template>
   
   <script setup>
-  import { ref, watch } from 'vue';
+  import { ref } from 'vue';
   import gsap from 'gsap';
   import { useRoute, useRouter } from 'vue-router';
   
@@ -45,7 +45,12 @@
   
   const enter = (el, done) => {
     if (isLastRoute.value) return;
-    gsap.to(el, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out", onComplete: done });
+    gsap.to(el, { x: 0, opacity: 1, duration: 0.5, ease: "power3.out", onComplete: () => {
+      gsap.set(el, { clearProps: "transform" });
+      done();
+    } 
+
+    });
   };
   
   const leave = (el, done) => {
