@@ -3,8 +3,8 @@
       <div class="input-container">
         <TransitionForm>
           <div class="centered">
-            <h2 :style="{ position: 'relative', bottom: `${inputPosition}px` }">Le nom de ton évènement</h2>
-            <input :style="{ position: 'relative', bottom: `${inputPosition}px` }" v-model="formStore.title" placeholder="Nom de l'événement" @blur="resetInputPosition" @focus="focusAction" @keyup.enter="nextStep"/>
+            <h2 :style="{ position: `${inputPositionDOM}`, bottom: `${titlePosition}px` }">Le nom de ton évènement</h2>
+            <input :style="{ position: `${inputPositionDOM}`, bottom: `${inputPosition}px`, width: `${widthInput}%` }" v-model="formStore.title" placeholder="Nom de l'événement" @blur="resetInputPosition" @focus="focusAction" @keyup.enter="nextStep"/>
           </div>
         </TransitionForm>
       </div>
@@ -33,6 +33,9 @@
     const btnContainer = ref(null);
     const buttonOffset = ref(20);
     const inputPosition = ref(0);
+    const titlePosition = ref(0);
+    const widthInput = ref(100);
+    const inputPositionDOM = ref("relative");
 
     const isDisabled = computed(() => formStore.title.length < 1);
 
@@ -52,10 +55,16 @@
       if (viewportHeight < windowHeight) {
         const keyboardHeight = windowHeight - viewportHeight;
         buttonOffset.value = keyboardHeight + 20; // Ajoute un espace au-dessus du clavier
-        inputPosition.value = 60;        
+        inputPositionDOM.value = "fixed";
+        inputPosition.value = keyboardHeight + 123;
+        titlePosition.value = keyboardHeight + 176;
+        widthInput.value = 75;       
       } else {
         buttonOffset.value = 20; // Réinitialise la position
         inputPosition.value = 0;
+        titlePosition.value = 0;
+        widthInput.value = 100;
+        inputPositionDOM.value = "relative"; 
       }
     };
 

@@ -12,14 +12,14 @@
           <path d="M32.4569 12.4063H40.1282L39.8176 13.5534C39.1484 13.649 38.2403 13.888 36.7347 15.0351L30.0671 20.1015L34.775 28.6571C35.3486 29.6847 36.9737 29.8998 37.6189 29.9476L37.4038 31.0469H28.5137L28.7527 29.9715C29.4218 29.9476 30.8318 29.9715 30.8318 28.9439C30.8318 28.6571 30.7123 28.2747 30.4733 27.8206L27.3666 22.0851L25.8371 23.2561L24.69 27.8684C24.5944 28.203 24.5705 28.4898 24.5705 28.7288C24.5705 30.0193 25.6459 29.9237 26.3151 29.9954L26.1 31.0469H18.2852L18.5003 29.9476C19.289 29.8998 20.7229 29.7325 21.2247 27.7728L24.2598 15.6803C24.2837 15.5369 24.3076 15.4174 24.3076 15.2741C24.3076 13.7924 21.9417 13.649 20.3405 13.649H19.3846C16.3256 13.6729 13.9597 15.2741 13.9597 18.5242C13.9597 19.8625 14.82 21.6071 16.3973 21.6071C17.6639 21.6071 17.6161 20.5317 17.7356 19.5996C17.879 18.5003 18.6198 17.2815 19.9581 17.2815C20.8663 17.2815 21.4398 18.1419 21.4398 19.0022C21.4398 21.2725 19.2651 23.2083 16.7558 23.2083C13.9836 23.2083 12 21.3203 12 18.5959C12 14.581 15.0351 12 19.1695 12C22.2285 12 24.5705 12.4063 27.6534 12.4063H30.7601L30.4733 13.5534C29.5174 13.649 28.2508 13.8163 27.8206 15.5847L26.6018 20.6034L33.15 15.6086C33.6996 15.2024 33.8908 14.8439 33.8908 14.581C33.8908 13.9358 32.8393 13.6251 32.2179 13.5534L32.4569 12.4063Z" fill="white"/>
         </svg>
       </RouterLink>
-      <div class="title-container" :style="{ position: 'relative', bottom: `${inputPosition}px` }">
+      <div class="title-container" :style="{ position: 'relative', bottom: `${titleContainerPosition}px` }">
         <h1>Hello !</h1>
         <h1>Bienvenue à {{ event.event.title }}</h1>
       </div>
       <div class="input-container">
-        <h3 :style="{ position: 'relative', bottom: `${inputPosition}px` }">Ton email</h3>
-        <input :style="{ position: 'relative', bottom: `${inputPosition}px` }" v-model="formGuestStore.email" placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail" @focus="focusAction" @keyup.enter="commitEmail"/>
-        <p v-if="emailError" :style="{ position: 'relative', bottom: `${inputPosition}px` }" class="error-message">{{ emailError }}</p>
+        <h3 :style="{ position: `${inputPositionDOM}`, bottom: `${titlePosition}px` }">Ton email</h3>
+        <input :style="{ position: `${inputPositionDOM}`, bottom: `${inputPosition}px`, width: `${widthInput}%` }" v-model="formGuestStore.email" placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail" @focus="focusAction" @keyup.enter="commitEmail"/>
+        <p v-if="emailError" :style="{ position: `${inputPositionDOM}`, bottom: `${textPosition}px` }" class="error-message">{{ emailError }}</p>
       </div>
       <div class="btn-container">
         <p>Cela te permettra de retrouver facilement l'évènement. Nous n'utilisons cette donnée pour rien d'autre.</p>
@@ -48,6 +48,11 @@
     const button = ref(null);
     const buttonOffset = ref(20);
     const inputPosition = ref(0)
+    const titlePosition = ref(0);
+    const titleContainerPosition = ref(0);
+    const textPosition = ref(0);
+    const widthInput = ref(100);
+    const inputPositionDOM = ref("relative");
     const emailError = ref("");
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
@@ -80,9 +85,7 @@
       inputPosition.value = 0;
       adjustButtonInputPosition();    
        if (!emailRegex.test(formGuestStore.email)) {
-        emailError.value = "Mauvaise syntaxe de l'adresse mail";
-        console.log('test');
-        
+        emailError.value = "Mauvaise syntaxe de l'adresse mail";        
         return false;
       }
       emailError.value = ""; // Pas d'erreur
@@ -112,11 +115,20 @@
       if (viewportHeight < windowHeight) {
         const keyboardHeight = windowHeight - viewportHeight;
         buttonOffset.value = keyboardHeight + 20; // Ajoute un espace au-dessus du clavier
-        inputPosition.value = 100;
-        
+        inputPositionDOM.value = "absolute";
+        inputPosition.value = keyboardHeight + 123;
+        titlePosition.value = keyboardHeight + 191;
+        textPosition.value = keyboardHeight + 100;
+        widthInput.value = 75;
+        titleContainerPosition.value = 80;
       } else {
         buttonOffset.value = 20; // Réinitialise la position
         inputPosition.value = 0;
+        titlePosition.value = 0;
+        textPosition.value = 0;
+        widthInput.value = 100;
+        titleContainerPosition.value = 0;
+        inputPositionDOM.value = "relative"; 
       }
     };
 

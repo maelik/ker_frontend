@@ -3,8 +3,8 @@
       <div class="input-container">
         <TransitionForm>
           <div class="centered">
-            <h2 :style="{ position: 'relative', bottom: `${inputPosition}px` }">Une description</h2>
-            <textarea :style="{ position: 'relative', bottom: `${inputPosition}px` }" v-model="formStore.description" placeholder="Des besoins ? Un thème? (courses, couchage etc ...)" @blur="resetInputPosition" @focus="focusAction" @keyup.enter="nextStep"></textarea>
+            <h2 :style="{ position: `${inputPositionDOM}`, bottom: `${titlePosition}px` }">Une description</h2>
+            <textarea :style="{ position: `${inputPositionDOM}`, bottom: `${inputPosition}px`, width: `${widthInput}%` }" v-model="formStore.description" placeholder="Des besoins ? Un thème? (courses, couchage etc ...)" @blur="resetInputPosition" @focus="focusAction" @keyup.enter="nextStep"></textarea>
           </div>
         </TransitionForm>
       </div>
@@ -33,6 +33,9 @@
     const btnContainer = ref(null);
     const buttonOffset = ref(20);
     const inputPosition = ref(0);
+    const titlePosition = ref(0);
+    const widthInput = ref(100);
+    const inputPositionDOM = ref("relative");
 
     const resetInputPosition = () => {
       adjustButtonInputPosition();
@@ -50,11 +53,16 @@
       if (viewportHeight < windowHeight) {
         const keyboardHeight = windowHeight - viewportHeight;
         buttonOffset.value = keyboardHeight + 20; // Ajoute un espace au-dessus du clavier
-        inputPosition.value = 120; // Augmente la hauteur de l'input pour s'adapter au clavier
-        
+        inputPositionDOM.value = "fixed";
+        inputPosition.value = keyboardHeight + 83;
+        titlePosition.value = keyboardHeight + (window.innerHeight * 0.35) + 103;
+        widthInput.value = 75;        
       } else {
         buttonOffset.value = 20; // Réinitialise la position
         inputPosition.value = 0;
+        titlePosition.value = 0;
+        widthInput.value = 100;
+        inputPositionDOM.value = "relative"; 
       }
     };
     

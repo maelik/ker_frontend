@@ -3,9 +3,9 @@
       <div class="input-container">
         <TransitionForm>
           <div class="centered">
-            <h2 :style="{ position: 'relative', bottom: `${inputPosition}px` }">Ton email</h2>
-            <input v-model="formStore.email" :style="{ position: 'relative', bottom: `${inputPosition}px` }" placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail" @focus="focusAction" @keyup.enter="nextStep"/>
-            <p v-if="emailError" :style="{ position: 'relative', bottom: `${inputPosition}px` }" class="error-message">{{ emailError }}</p>
+            <h2 :style="{ position: `${inputPositionDOM}`, bottom: `${titlePosition}px` }">Ton email</h2>
+            <input v-model="formStore.email" :style="{ position: `${inputPositionDOM}`, bottom: `${inputPosition}px`, width: `${widthInput}%` } " placeholder="email@exemple.fr" type="email" :class="{ invalid: emailError }" @blur="validateEmail" @focus="focusAction" @keyup.enter="nextStep"/>
+            <p v-if="emailError" :style="{ position: `${inputPositionDOM}`, bottom: `${textPosition}px` }" class="error-message">{{ emailError }}</p>
           </div>
         </TransitionForm>
       </div>
@@ -27,7 +27,11 @@
     const router = useRouter();
     const button = ref(null);
     const buttonOffset = ref(20);
-    const inputPosition = ref(0)
+    const inputPosition = ref(0);
+    const titlePosition = ref(0);
+    const textPosition = ref(0);
+    const widthInput = ref(100);
+    const inputPositionDOM = ref("relative");
     const emailError = ref("");
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     
@@ -54,11 +58,19 @@
       if (viewportHeight < windowHeight) {
         const keyboardHeight = windowHeight - viewportHeight;
         buttonOffset.value = keyboardHeight + 20; // Ajoute un espace au-dessus du clavier
-        inputPosition.value = 60;
+        inputPositionDOM.value = "fixed";
+        inputPosition.value = keyboardHeight + 123;
+        titlePosition.value = keyboardHeight + 176;
+        textPosition.value = keyboardHeight + 80;
+        widthInput.value = 75;
         
       } else {
         buttonOffset.value = 20; // Réinitialise la position
         inputPosition.value = 0; // Réinitialise la position
+        titlePosition.value = 0;
+        textPosition.value = 0;
+        widthInput.value = 100;
+        inputPositionDOM.value = "relative"; 
       }
     };
 
