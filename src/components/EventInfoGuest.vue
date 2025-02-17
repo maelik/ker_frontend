@@ -5,7 +5,7 @@
         <span class="info-text">Informations</span>
         <div class="line"></div>
       </div>   
-      <form @submit="saveGuestResponses">
+      <form @submit.prevent="saveGuestResponses">
         <label class="label" for="user-name">Quel est ton nom ?</label>
         <input class="input-form" v-model="formGuestStore.guestName" id="user-name" type="text" placeholder="Ton nom" />
   
@@ -195,7 +195,7 @@
         const eventData = await guestResponse.json();
         console.log(eventData);
       } catch (error) {
-        console.error('Erreur:', error);
+        console.error('Erreur:', error.message);
       }
     };
 
